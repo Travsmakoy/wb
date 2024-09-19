@@ -29,13 +29,15 @@ if ($is_admin) {
         header {
             background-color: #333;
             color: #fff;
-            padding: 1rem;
-            text-align: center;
+            padding: 0;
+            position: relative;
+            width: 100%;
         }
         nav {
             display: flex;
             justify-content: center;
             background-color: #444;
+            padding: 0.5rem 0;
         }
         nav a {
             color: #fff;
@@ -45,6 +47,25 @@ if ($is_admin) {
         }
         nav a:hover {
             background-color: #555;
+        }
+        .hero {
+            background: url('your-hero-image.jpg') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            margin: 1rem 0;
         }
         .container {
             padding: 2rem;
@@ -72,6 +93,12 @@ if ($is_admin) {
             nav a {
                 padding: 0.75rem;
             }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
             .welcome {
                 padding: 1rem;
             }
@@ -80,19 +107,22 @@ if ($is_admin) {
 </head>
 <body>
     <header>
-        <h1>Welcome to VapeShop</h1>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <?php if ($is_logged_in): ?>
+                <a href="logout.php">Logout</a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+            <?php endif; ?>
+        </nav>
+        <div class="hero">
+            <h1>Welcome to VapeShop</h1>
+            <p>Your one-stop shop for the best vape products!</p>
+        </div>
     </header>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="#">Shop</a>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <?php if ($is_logged_in): ?>
-            <a href="logout.php">Logout</a>
-        <?php else: ?>
-            <a href="login.php">Login</a>
-        <?php endif; ?>
-    </nav>
     <div class="container">
         <div class="welcome">
             <h2>Shop the Best Vape Products!</h2>
@@ -100,7 +130,7 @@ if ($is_admin) {
         </div>
     </div>
     <footer>
-        <p>&copy; 2024 VapeShop. All rights reserved.</p>
+        <p>&copy; 2024 Innocous Mist. All rights reserved.</p>
     </footer>
 </body>
 </html>
