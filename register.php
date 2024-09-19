@@ -121,5 +121,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
     <a href="login.php">Already have an account? Login</a>
 </body>
-<script src="ph-address-selector.js"></script>
+<script src="ph-json/ph-address-selector.js"></script>
 </html>

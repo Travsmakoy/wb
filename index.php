@@ -6,4 +6,5 @@ if (!isset($_SESSION['user_id']) || $_SESSION['is_admin']) {
 }
 ?>
 <h1>Welcome to VapeShop!</h1>
+
 <a href="logout.php">Logout</
