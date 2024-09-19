@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Email already exists!";
         } else {
             // Handle file upload
-            $target_dir = "uploads/";
+            $target_dir = "cstmr-id/";
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
             }
