@@ -1,16 +1,6 @@
 <?php
-session_start();
-require_once 'conf/config.php';
-
-// Check if the user is logged in and an admin
-$is_logged_in = isset($_SESSION['user_id']);
-$is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'];
-
-// Redirect admin users to their dashboard
-if ($is_admin) {
-    header("Location: su/dashboard.php");
-    exit;
-}
+session_start(); // Ensure session is started
+include 'navbar.php'; // Include the navigation
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,43 +19,59 @@ if ($is_admin) {
         header {
             background-color: #333;
             color: #fff;
-            padding: 0;
-            position: relative;
+            padding: 1rem;
+            position: fixed;
             width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
-        nav {
+        .navbar-container {
             display: flex;
-            justify-content: center;
-            background-color: #444;
-            padding: 0.5rem 0;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
         }
-        nav a {
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            background: #fff;
+            height: 3px;
+            width: 25px;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        #navbar {
+            display: flex;
+            align-items: center;
+        }
+        #navbar a {
             color: #fff;
             padding: 1rem;
             text-decoration: none;
             transition: background 0.3s ease;
         }
-        nav a:hover {
+        #navbar a:hover {
             background-color: #555;
         }
         .hero {
-            background: url('your-hero-image.jpg') no-repeat center center/cover;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
+            padding: 100px 2rem 2rem;
+            background: url('hero-image.jpg') no-repeat center center;
+            background-size: cover;
             text-align: center;
-            padding: 2rem;
+            color: #fff;
+            border-bottom: 2px solid #444;
         }
         .hero h1 {
             font-size: 3rem;
             margin: 0;
         }
         .hero p {
-            font-size: 1.25rem;
-            margin: 1rem 0;
+            font-size: 1.5rem;
         }
         .container {
             padding: 2rem;
@@ -87,42 +93,41 @@ if ($is_admin) {
             margin-top: 2rem;
         }
         @media (max-width: 768px) {
-            nav {
+            .menu-toggle {
+                display: flex;
+            }
+            #navbar {
+                display: none;
                 flex-direction: column;
+                width: 100%;
+                background-color: #333;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                left: 0;
+                z-index: 1000;
             }
-            nav a {
-                padding: 0.75rem;
+            #navbar.active {
+                display: flex;
             }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .welcome {
+            #navbar a {
                 padding: 1rem;
+                text-align: center;
+                border-bottom: 1px solid #555;
+            }
+            #navbar a:last-child {
+                border-bottom: none;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.php">Home</a>
-            <a href="#">Shop</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <?php if ($is_logged_in): ?>
-                <a href="logout.php">Logout</a>
-            <?php else: ?>
-                <a href="login.php">Login</a>
-            <?php endif; ?>
-        </nav>
-        <div class="hero">
-            <h1>Welcome to VapeShop</h1>
-            <p>Your one-stop shop for the best vape products!</p>
-        </div>
+        <?php include 'navbar.php'; // Include the navigation bar once ?>
     </header>
+    <div class="hero">
+        <h1>Welcome to VapeShop</h1>
+        <p>Your one-stop shop for the best vape products!</p>
+    </div>
     <div class="container">
         <div class="welcome">
             <h2>Shop the Best Vape Products!</h2>
@@ -130,7 +135,7 @@ if ($is_admin) {
         </div>
     </div>
     <footer>
-        <p>&copy; 2024 Innocous Mist. All rights reserved.</p>
+        <p>&copy; 2024 VapeShop. All rights reserved.</p>
     </footer>
 </body>
 </html>
