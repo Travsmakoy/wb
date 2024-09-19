@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once 'conf/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $last_name = $_POST['last_name'];
