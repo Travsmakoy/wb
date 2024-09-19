@@ -61,65 +61,164 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #3b3b98, #6a89cc, #38ada9, #82ccdd);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 1100px;
+            height: auto;
+        }
+
+        .form-column {
+            width: 45%;
+            padding: 0 1rem;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #3b3b98;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            color: #444;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="file"], select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="file"]:focus, select:focus {
+            border-color: #6a89cc;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #3b3b98;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: #6a89cc;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #3b3b98;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .form-column {
+                width: 100%;
+                padding: 0;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Register</h2>
-    <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
-    <form method="post" enctype="multipart/form-data">
-        <label>Last Name:</label><input type="text" name="last_name" required><br>
-        <label>First Name:</label><input type="text" name="first_name" required><br>
-        <!-- <label>Middle Name (Optional):</label><input type="text" name="middle_name"><br> -->
-        <label>Birthday:</label><input type="date" name="birthday" required><br>
-        <label>Identification Upload (Valid ID):</label><input type="file" name="identification" required><br>
-        <label>Email Address:</label><input type="email" name="email" required><br>
-        <label>Contact Number:</label><input type="text" name="contact_number" required><br>
-        <label>Password:</label><input type="password" name="password" required><br>
-        <label>Confirm Password:</label><input type="password" name="confirm_password" required><br>
-        <!-- <label>Unit Number / House Number:</label><input type="text" name="home_address" required><br>
-        <label>Street:</label><input type="text" name="street" required><br>
-        <label>Province:</label><input type="text" name="province" required><br>
-        <label>City:</label><input type="text" name="city" required><br>
-        <label>Municipality:</label><input type="text" name="municipality" required><br>
-        <label>Barangay:</label><input type="text" name="barangay" required><br> -->
-        <!-- <label>Zipcode:</label><input type="text" name="zipcode" required><br> -->
-        <h3>Address Details</h3>
-        <label>Unit Number / House Number:</label><input number="text" name="home_address" required>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Region *</label>
-            <select name="street" class="form-control form-control-md" id="region"></select>
-            <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
+    <div class="form-container">
+        <div class="form-column">
+            <h2>Register</h2>
+            <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
+            <form method="post" enctype="multipart/form-data">
+                <label>Last Name:</label><input type="text" name="last_name" required>
+                <label>First Name:</label><input type="text" name="first_name" required>
+                <label>Birthday:</label><input type="date" name="birthday" required>
+                <label>Identification Upload (Valid ID):</label><input type="file" name="identification" required>
+                <label>Email Address:</label><input type="email" name="email" required>
+                <label>Contact Number:</label><input type="text" name="contact_number" required>
+                <label>Password:</label><input type="password" name="password" required>
+                <label>Confirm Password:</label><input type="password" name="confirm_password" required>
         </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Province *</label>
-            <select name="province" class="form-control form-control-md" id="province"></select>
-            <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
+        <div class="form-column">
+                <h3>Address Details</h3>
+                <label>Unit Number / House Number:</label><input type="text" name="home_address" required>
+                <label>Region:</label><select name="region" id="region" required></select>
+                <label>Province:</label><select name="province" id="province" required></select>
+                <label>City / Municipality:</label><select name="city" id="city" required></select>
+                <label>Barangay:</label><select name="barangay" id="barangay" required></select>
+                <button type="submit">Register</button>
+            </form>
+            <a href="login.php">Already have an account? Login</a>
         </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">City / Municipality *</label>
-            <select name="city" class="form-control form-control-md" id="city"></select>
-            <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Barangay *</label>
-            <select name="barangay" class="form-control form-control-md" id="barangay"></select>
-            <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-        </div>
-     
-        <div class="col-md-6">
+    </div>
 
-        </div>
-
-        <button type="submit">Register</button>
-    </form>
-    <a href="login.php">Already have an account? Login</a>
+    <script src="ph-json/ph-address-selector.js"></script>
 </body>
-<script src="ph-json/ph-address-selector.js"></script>
 </html>
