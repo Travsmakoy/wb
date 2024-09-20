@@ -1,3 +1,67 @@
+<?php
+require_once 'conf/config.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $last_name = $_POST['last_name'];
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
+    $birthday = $_POST['birthday'];
+    $email = $_POST['email'];
+    $contact_number = $_POST['contact_number'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $home_address = $_POST['home_address'];
+    $street = $_POST['street'];
+    $province = $_POST['province'];
+    $city = $_POST['city'];
+    $municipality = $_POST['municipality'];
+    $barangay = $_POST['barangay'];
+    $zipcode = $_POST['zipcode'];
+    
+    // Age validation
+    $dob = new DateTime($birthday);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
+
+    if ($age < 18) {
+        $error = "You must be at least 18 years old to register.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match!";
+    } else {
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $error = "Email already exists!";
+        } else {
+            // Handle file upload
+            $target_dir = "cstmr-id/";
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+            }
+            $target_file = $target_dir . uniqid() . '-' . basename($_FILES["identification"]["name"]);
+
+            if (move_uploaded_file($_FILES["identification"]["tmp_name"], $target_file)) {
+                // Hash password
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+                // Insert user into database
+                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, middle_name, birthday, identification_url, email, contact_number, password, home_address, street, province, city, municipality, barangay, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('sssssssssssssss', $last_name, $first_name, $middle_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $street, $province, $city, $municipality, $barangay, $zipcode);
+                $stmt->execute();
+                header("Location: login.php");
+                exit;
+            } else {
+                $error = "Failed to upload file.";
+            }
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +112,7 @@
             <select name="barangay" class="form-control form-control-md" id="barangay"></select>
             <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
         </div>
-
+     
         <div class="col-md-6">
 
         </div>

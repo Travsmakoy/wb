@@ -142,4 +142,20 @@
     .form-container {
       padding: 20px;
     }
+
+    .register-top-page img{
+      height: 1px;
+  }
+
+    .registerpage1{
+      max-width: 50%;
+      max-height: 50%;
+    }
+    .registerpage1 img{
+      height: 2rem;
+    }
+.registerpage2{
+  max-width: 50%;
+  max-height: 50%;
+}
   }
