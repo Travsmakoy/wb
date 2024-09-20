@@ -8,7 +8,7 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
     exit;
 }
 
-$message = ''; // Variable to store success/error messages
+$message = ''; // Initialize message variable
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_id = $_POST['category_id'];
@@ -45,15 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dYp7zlKNFTePaRHsPGAu6L0waVHglnosXCVc+npfb+5FfYPojCwt8kdnSxx7qJ7gxuP47wnSaKvN6bV6gtCQNg==" crossorigin="anonymous" />
     <style>
-        * {
-            box-sizing: border-box;
+        :root {
+            --primary-bg: #0a0b1e;
+            --secondary-bg: #141836;
+            --accent-pink: #ff00ff;
+            --accent-blue: #00ffff;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
         }
 
+        /* Global styling */
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
             margin: 0;
             padding: 0;
-            background-color: #f4f6f9;
         }
 
         /* Sidebar */
@@ -63,23 +70,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #343a40;
+            background-color: var(--secondary-bg);
             padding-top: 20px;
-            color: white;
+            color: var(--text-light);
         }
 
         .sidebar a {
             padding: 15px;
             text-decoration: none;
             font-size: 18px;
-            color: white;
+            color: var(--text-light);
             display: block;
             margin-bottom: 10px;
+            transition: background-color 0.3s ease, border-left 0.3s ease;
         }
 
         .sidebar a:hover {
-            background-color: #495057;
-            border-left: 5px solid #6a89cc;
+            background-color: rgba(255, 0, 255, 0.1);
+            border-left: 5px solid var(--accent-pink);
         }
 
         .sidebar i {
@@ -93,23 +101,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         header {
-            background-color: #6a89cc;
-            color: white;
+            background-color: var(--accent-blue);
+            color: var(--text-light);
             padding: 10px;
             text-align: center;
             position: sticky;
             top: 0;
+            box-shadow: 0 0 10px var(--accent-blue);
         }
 
         .container {
-            background: white;
+            background-color: var(--secondary-bg);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.2);
         }
 
-        .container h2 {
-            color: #3b3b98;
+        h2 {
+            color: var(--accent-blue);
+            font-family: 'Orbitron', sans-serif;
             margin-bottom: 1.5rem;
         }
 
@@ -123,7 +133,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             padding: 10px;
             margin-bottom: 1rem;
-            border: 1px solid #ddd;
+            border: 1px solid var(--accent-blue);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
             border-radius: 5px;
         }
 
@@ -133,24 +145,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         button {
             padding: 10px 15px;
-            background-color: #3b3b98;
-            color: white;
+            background-color: var(--accent-pink);
+            color: var(--text-light);
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #6a89cc;
+            background-color: #ff33ff;
         }
 
         .success {
-            color: green;
+            color: var(--accent-blue);
         }
 
         .error {
-            color: red;
+            color: var(--accent-pink);
         }
 
         /* Footer */
@@ -158,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-top: 20px;
             text-align: center;
             font-size: 0.9rem;
-            color: #6c757d;
+            color: var(--text-muted);
         }
 
         /* Responsive adjustments */
@@ -188,9 +200,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Sidebar -->
     <div class="sidebar">
         <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="products.php"><i class="fas fa-boxes"></i> Products</a>
-        <a href="chats.php"><i class="fas fa-comments"></i> Chats</a>
-        <a href="users.php"><i class="fas fa-users"></i> Users</a>
+        <a href="#"><i class="fas fa-boxes"></i> Products</a>
+        <a href="#"><i class="fas fa-comments"></i> Chats</a>
+        <a href="#"><i class="fas fa-users"></i> Users</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 

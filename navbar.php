@@ -15,8 +15,8 @@ $is_logged_in = isset($_SESSION['user_id']);
         <div class="navbar-container">
             <div class="logo">
                 <a href="index.php" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="mist-logo.png" alt="Innocuous Mist" class="navbar-logo">
-                    <span class="navbar-brand">Innocuous Mist</span>
+                    <img src="logo.png" alt="Innocuous Mist" class="navbar-logo">
+                    <!-- <span class="navbar-brand">Innocuous Mist</span> -->
                 </a>
             </div>
             <ul class="nav-menu">
@@ -57,15 +57,19 @@ $is_logged_in = isset($_SESSION['user_id']);
         margin: 0 auto;
     }
 
+    /* Logo Styles */
+    .navbar-logo {
+        padding-top: 10px;
+        height: 50px; /* Adjust the height for better visibility */
+        width: auto; 
+        margin-right: 10px;
+        
+    }
+
     .logo a {
         display: flex;
         align-items: center;
         text-decoration: none;
-    }
-
-    .navbar-logo {
-        height: 40px;
-        margin-right: 10px;
     }
 
     .navbar-brand {
@@ -111,6 +115,24 @@ $is_logged_in = isset($_SESSION['user_id']);
     @media (max-width: 768px) {
         .navbar-container {
             flex-wrap: wrap;
+            padding: 0 1rem; /* Reduce padding for mobile */
+        }
+
+        .navbar-logo {
+            height: 50px; /* Smaller height for mobile */
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem; /* Adjust font size for mobile */
+        }
+
+        .nav-link {
+            font-size: 0.8rem; /* Adjust font size for mobile */
+        }
+
+        .btn-login {
+            padding: 6px 15px; /* Adjust padding for mobile */
+            font-size: 0.8rem; /* Adjust font size for mobile */
         }
 
         .nav-menu {
@@ -127,10 +149,6 @@ $is_logged_in = isset($_SESSION['user_id']);
 
         .nav-menu.active {
             display: flex; /* Show when active */
-        }
-
-        .nav-menu li {
-            margin: 0.5rem 0;
         }
 
         .hamburger {
