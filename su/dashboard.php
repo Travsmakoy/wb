@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
         // Insert product into the database
         $stmt = $conn->prepare("INSERT INTO products (category_id, brand_id, product_name, price, flavor, color, puffs, description, img_dir) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iisdsisis', $category_id, $brand_id, $product_name, $price, $flavor, $color, $puffs, $description, $target_file);
+        $stmt->bind_param('iisdssiss', $category_id, $brand_id, $product_name, $price, $flavor, $color, $puffs, $description, $target_file);
 
         if ($stmt->execute()) {
             $message = "<p class='success'>Product added successfully!</p>";
@@ -82,40 +82,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_brand'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
-        /* Add your existing styles here */
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
         .sidebar {
-            width: 200px;
+            width: 250px;
             background: #333;
             color: #fff;
             padding: 20px;
+            height: 100vh;
+            position: fixed;
         }
         .sidebar a {
             color: #fff;
             text-decoration: none;
             display: block;
-            margin: 10px 0;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #555;
         }
         .content {
             flex: 1;
             padding: 20px;
+            margin-left: 250px;
         }
         .success {
-            color: green;
+            color: #28a745;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
         }
         .error {
-            color: red;
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
         }
-        /* Add more styles as needed */
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
+        <h2>Admin Panel</h2>
         <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <a href="#"><i class="fas fa-boxes"></i> Products</a>
         <a href="#"><i class="fas fa-comments"></i> Chats</a>
