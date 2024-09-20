@@ -1,4 +1,5 @@
 <?php include 'navbar.php'; ?>
+<?php require_once 'conf/config.php'; // Include your database connection file ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,10 +86,12 @@
             border-radius: 10px;
             padding: 20px;
             margin: 15px;
-            width: 250px;
+            width: 250px; /* Fixed width */
+            height: 350px; /* Fixed height for better alignment */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             cursor: pointer;
+            overflow: hidden; /* Ensures content doesn't overflow */
         }
 
         .product-card:hover {
@@ -97,8 +100,10 @@
 
         .product-image {
             width: 100%;
-            height: auto;
+            height: 200px; /* Fixed height for images */
+            object-fit: cover; /* Ensures images cover the area */
             border-radius: 10px;
+            margin-bottom: 10px;
         }
 
         /* Pop-up styles */
@@ -190,7 +195,8 @@
             }
 
             .product-card {
-                width: 90%;
+                width: 90%; /* Adjust width for mobile */
+                height: auto; /* Allow height to adjust */
             }
         }
     </style>
@@ -209,17 +215,21 @@
             <h2>Vapes</h2>
             <p>Discover our range of high-quality vapes for a superior experience.</p>
             <div class="products">
-                <div class="product-card">
-                    <img src="images/vape1.jpg" alt="Vape 1" class="product-image">
-                    <h3>Vape Model 1</h3>
-                    <p>Description of Vape Model 1.</p>
-                </div>
-                <div class="product-card">
-                    <img src="images/vape2.jpg" alt="Vape 2" class="product-image">
-                    <h3>Vape Model 2</h3>
-                    <p>Description of Vape Model 2.</p>
-                </div>
-                <!-- Add more products as needed -->
+                <?php
+                $stmt = $conn->prepare("SELECT product_name, description, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ?");
+                $category_id = 1; // Assuming 1 is for 'Vapes'
+                $stmt->bind_param("i", $category_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
+                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
+                            <h3>{$row['product_name']}</h3>
+                            <p>{$row['description']}</p>
+                          </div>";
+                }
+                ?>
             </div>
         </section>
 
@@ -227,17 +237,20 @@
             <h2>Juice</h2>
             <p>Explore our delicious selection of vape juices.</p>
             <div class="products">
-                <div class="product-card">
-                    <img src="images/juice1.jpg" alt="Juice 1" class="product-image">
-                    <h3>Juice Flavor 1</h3>
-                    <p>Description of Juice Flavor 1.</p>
-                </div>
-                <div class="product-card">
-                    <img src="images/juice2.jpg" alt="Juice 2" class="product-image">
-                    <h3>Juice Flavor 2</h3>
-                    <p>Description of Juice Flavor 2.</p>
-                </div>
-                <!-- Add more products as needed -->
+                <?php
+                $category_id = 2; // Assuming 2 is for 'Juice'
+                $stmt->bind_param("i", $category_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
+                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
+                            <h3>{$row['product_name']}</h3>
+                            <p>{$row['description']}</p>
+                          </div>";
+                }
+                ?>
             </div>
         </section>
 
@@ -245,17 +258,20 @@
             <h2>Disposables</h2>
             <p>Check out our convenient disposable vapes.</p>
             <div class="products">
-                <div class="product-card">
-                    <img src="images/disposable1.jpg" alt="Disposable 1" class="product-image">
-                    <h3>Disposable Vape 1</h3>
-                    <p>Description of Disposable Vape 1.</p>
-                </div>
-                <div class="product-card">
-                    <img src="images/disposable2.jpg" alt="Disposable 2" class="product-image">
-                    <h3>Disposable Vape 2</h3>
-                    <p>Description of Disposable Vape 2.</p>
-                </div>
-                <!-- Add more products as needed -->
+                <?php
+                $category_id = 3; // Assuming 3 is for 'Disposables'
+                $stmt->bind_param("i", $category_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
+                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
+                            <h3>{$row['product_name']}</h3>
+                            <p>{$row['description']}</p>
+                          </div>";
+                }
+                ?>
             </div>
         </section>
     </main>
@@ -278,27 +294,13 @@
             document.getElementById('popupImage').src = image;
             document.getElementById('popupTitle').textContent = title;
             document.getElementById('popupDescription').textContent = description;
-            document.getElementById('popupPrice').textContent = price;
+            document.getElementById('popupPrice').textContent = '$' + price;
             document.getElementById('productPopup').style.display = 'block';
         }
 
         function closePopup() {
             document.getElementById('productPopup').style.display = 'none';
         }
-
-        // Add click event listeners to all product cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const productCards = document.querySelectorAll('.product-card');
-            productCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const image = this.querySelector('.product-image').src;
-                    const title = this.querySelector('h3').textContent;
-                    const description = this.querySelector('p').textContent;
-                    const price = '$XX.XX'; // Replace with actual price when available
-                    openPopup(image, title, description, price);
-                });
-            });
-        });
     </script>
 </body>
 </html>
