@@ -3,6 +3,7 @@ session_start(); // Ensure session is started
 require_once 'conf/config.php';
 
 $error = '';
+$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
@@ -25,12 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_admin'] = $user['is_admin'];
-
-            if ($user['is_admin']) {
-                header("Location: su/dashboard.php"); // Redirect to admin dashboard
-            } else {
-                header("Location: index.php"); // Redirect to user page
-            }
+            $success = "Login successful! Redirecting...";
+            header("Location: " . ($user['is_admin'] ? "su/dashboard.php" : "index.php"));
             exit;
         } else {
             // Authentication failed
@@ -39,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,24 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - VapeShop</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.0.15/sweetalert2.min.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(-45deg, #6a11cb, #2575fc, #6a11cb, #2575fc);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #333, #555);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+            color: white;
         }
         header {
             background-color: #333;
@@ -75,58 +66,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             left: 0;
             z-index: 1000;
         }
-        .navbar-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-        .menu-toggle span {
-            background: #fff;
-            height: 3px;
-            width: 25px;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-        #navbar {
-            display: flex;
-            align-items: center;
-        }
-        #navbar a {
-            color: #fff;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-        #navbar a:hover {
-            background-color: #555;
-        }
         .container {
-            width: 100%;
-            max-width: 400px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(169, 169, 169, 0.9);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             padding: 1rem;
-            position: relative;
-            margin-top: 4rem; /* Adjust for fixed header */
+            width: 300px;
+            margin-top: 4rem;
+            text-align: center;
         }
-        .container img {
-            width: 100%;
+        img {
+            width: 80%;
             height: auto;
-            max-height: 150px;
+            max-height: 80px;
             object-fit: contain;
             margin-bottom: 1rem;
         }
         form {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
         label {
             margin: 0.5rem 0;
@@ -136,6 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 4px;
+            width: 100%;
+            max-width: 250px;
         }
         button {
             padding: 0.5rem;
@@ -144,51 +105,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 250px;
         }
         button:hover {
             background-color: #555;
         }
-        .error {
-            color: red;
-            margin-bottom: 1rem;
-        }
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-            #navbar {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background-color: #333;
-                position: absolute;
-                top: 60px; /* Adjust based on header height */
-                left: 0;
-                z-index: 1000;
-            }
-            #navbar.active {
-                display: flex;
-            }
-            #navbar a {
-                padding: 1rem;
-                text-align: center;
-                border-bottom: 1px solid #555;
-            }
-            #navbar a:last-child {
-                border-bottom: none;
-            }
-        }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.0.15/sweetalert2.all.min.js"></script>
 </head>
 <body>
     <header>
-        <?php include 'navbar.php'; // Include the navigation bar ?>
+        <?php include 'navbar.php'; ?>
     </header>
     <div class="container">
-        <img src="mist-logo.png" alt="Login Image"> <!-- Replace with your image -->
+        <img src="mist-logo.png" alt="Login Image">
         <h2>Login</h2>
-        <form method="post" action="login.php">
+        <form id="loginForm" method="post" action="login.php">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
@@ -197,15 +130,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         <p>Don't have an account? <a href="register.php">Register here</a></p>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            <?php if (isset($error) && !empty($error)) { ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: '<?php echo $error; ?>'
-                });
+            <?php if (!empty($error)) { ?>
+                alert('Error: <?php echo addslashes($error); ?>');
             <?php } ?>
+
+            <?php if (!empty($success)) { ?>
+                alert('Success: <?php echo addslashes($success); ?>');
+            <?php } ?>
+
+            // Client-side validation for the form
+            const form = document.getElementById('loginForm');
+            form.addEventListener('submit', function(event) {
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+
+                if (!email || !password) {
+                    event.preventDefault(); // Prevent the form from submitting
+                    alert('Please fill in all fields!');
+                }
+            });
         });
     </script>
 </body>

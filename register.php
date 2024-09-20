@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #3b3b98, #6a89cc, #38ada9, #82ccdd);
+            background: #333;
             background-size: 400% 400%;
             animation: gradient 10s ease infinite;
             height: 100vh;

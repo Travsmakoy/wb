@@ -1,0 +1,145 @@
+:root {
+    --primary-bg: #0a0b1e;
+    --secondary-bg: #141836;
+    --accent-pink: #ff00ff;
+    --accent-blue: #00ffff;
+    --text-light: #ffffff;
+    --text-muted: #a0a0a0;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font, you may need to import this */
+    color: var(--accent-blue);
+  }
+  
+  /* Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Navigation */
+  .navbar {
+    background-color: rgba(20, 24, 54, 0.8);
+    padding: 10px 0;
+  }
+  
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-blue);
+  }
+  
+  .nav-link {
+    color: var(--text-light);
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: var(--accent-pink);
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: var(--accent-pink);
+    color: var(--text-light);
+  }
+  
+  .btn-primary:hover {
+    background-color: #ff33ff;
+  }
+  
+  .btn-login {
+    background-color: transparent;
+    border: 2px solid var(--accent-blue);
+    color: var(--accent-blue);
+  }
+  
+  .btn-login:hover {
+    background-color: var(--accent-blue);
+    color: var(--primary-bg);
+  }
+  
+  /* Forms */
+  .form-container {
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  }
+  
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--accent-blue);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border-radius: 5px;
+  }
+  
+  .form-input::placeholder {
+    color: var(--text-muted);
+  }
+  
+  /* Custom Logo */
+  .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  /* Neon Text Effect */
+  .neon-text {
+    color: var(--accent-pink);
+    text-shadow: 0 0 5px var(--accent-pink), 0 0 10px var(--accent-pink), 0 0 20px var(--accent-pink);
+  }
+  
+  /* Card */
+  .card {
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Utility Classes */
+  .text-center { text-align: center; }
+  .mt-20 { margin-top: 20px; }
+  .mb-20 { margin-bottom: 20px; }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px;
+    }
+    
+    .form-container {
+      padding: 20px;
+    }
+  }
