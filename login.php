@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header {
             background-color: #333;
             color: #fff;
-            padding: 0.5rem 1rem;
             position: fixed;
             width: 100%;
             top: 0;
@@ -70,9 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: rgba(169, 169, 169, 0.9);
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            width: 300px;
-            margin-top: 4rem;
             text-align: center;
         }
         img {
