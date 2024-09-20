@@ -94,8 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_brand'])) {
             background: #333;
             color: #fff;
             padding: 20px;
-            height: 100vh;
-            position: fixed;
         }
         .sidebar a {
             color: #fff;
@@ -112,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_brand'])) {
         .content {
             flex: 1;
             padding: 20px;
-            margin-left: 250px;
         }
         .success {
             color: #28a745;
@@ -176,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_brand'])) {
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="#"><i class="fas fa-boxes"></i> Products</a>
+        <a href="inventory.php"><i class="fas fa-boxes"></i> Inventory</a>
         <a href="#"><i class="fas fa-comments"></i> Chats</a>
         <a href="#"><i class="fas fa-users"></i> Users</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
