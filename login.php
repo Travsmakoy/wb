@@ -49,82 +49,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #333, #555);
+            background-color: #1a1b26;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             color: white;
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
         .container {
-            background: rgba(169, 169, 169, 0.9);
+            background-color: #24273a;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
         }
-        img {
-            width: 80%;
-            height: auto;
-            max-height: 80px;
-            object-fit: contain;
-            margin-bottom: 1rem;
+        h1 {
+            text-align: center;
+            color: #8be9fd;
+            margin-bottom: 2rem;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 2rem;
+            width: 120px;
+            height: 120px;
         }
         form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-        label {
-            margin: 0.5rem 0;
         }
         input {
-            margin-bottom: 0.5rem;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-            max-width: 250px;
-        }
-        button {
-            padding: 0.5rem;
-            background-color: #333;
-            color: #fff;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
             border: none;
             border-radius: 4px;
+            background-color: #1f2b46;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        input::placeholder {
+            color: #a0a0a0;
+        }
+        button {
+            background: linear-gradient(to right, #0fadf2, #ff00ff);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            max-width: 250px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
         }
         button:hover {
-            background-color: #555;
+            opacity: 0.9;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #a0a0a0;
+        }
+        .register-link a {
+            color: #0fadf2;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <header>
-        <?php include 'navbar.php'; ?>
-    </header>
     <div class="container">
-        <img src="mist-logo.png" alt="Login Image">
-        <h2>Login</h2>
+        <img src="mist-logo.png" alt="Vape Shop Logo" class="logo">
         <form id="loginForm" method="post" action="login.php">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">LOGIN</button>
         </form>
-        <p>Don't have an account? <a href="register.php">Register here</a></p>
+        <p class="register-link">Don't have an account? <a href="register.php">Register</a></p>
     </div>
 
     <script>

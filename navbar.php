@@ -43,6 +43,7 @@ $is_logged_in = isset($_SESSION['user_id']);
 <style>
     /* Additional custom styles for the navbar */
     .navbar {
+        display:  fixed;
         background-color: var(--primary-bg);
         padding: 10px 0;
         box-shadow: 0 2px 10px rgba(0, 255, 255, 0.1);
@@ -55,12 +56,13 @@ $is_logged_in = isset($_SESSION['user_id']);
         padding: 0 2rem;
         max-width: 1200px;
         margin: 0 auto;
+        height: auto;
     }
 
     /* Logo Styles */
     .navbar-logo {
-        padding-top: 10px;
-        height: 50px; /* Adjust the height for better visibility */
+        padding-top: 23px;
+        height: 40px; /* Adjust the height for better visibility */
         width: auto; 
         margin-right: 10px;
         
