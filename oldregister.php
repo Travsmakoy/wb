@@ -73,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <h2>Register</h2>
     <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
+    
     <form method="post" enctype="multipart/form-data">
         <label>Last Name:</label><input type="text" name="last_name" required><br>
         <label>First Name:</label><input type="text" name="first_name" required><br>
-        <!-- <label>Middle Name (Optional):</label><input type="text" name="middle_name"><br> -->
         <label>Birthday:</label><input type="date" name="birthday" required><br>
         <label>Identification Upload (Valid ID):</label><input type="file" name="identification" required><br>
         <label>Email Address:</label><input type="email" name="email" required><br>
@@ -105,10 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label class="form-label">Barangay *</label>
             <select name="barangay" class="form-control form-control-md" id="barangay"></select>
             <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-        </div>
-     
-        <div class="col-md-6">
-
         </div>
 
         <button type="submit">Register</button>
