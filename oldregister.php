@@ -83,13 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Contact Number:</label><input type="text" name="contact_number" required><br>
         <label>Password:</label><input type="password" name="password" required><br>
         <label>Confirm Password:</label><input type="password" name="confirm_password" required><br>
-        <!-- <label>Unit Number / House Number:</label><input type="text" name="home_address" required><br>
-        <label>Street:</label><input type="text" name="street" required><br>
-        <label>Province:</label><input type="text" name="province" required><br>
-        <label>City:</label><input type="text" name="city" required><br>
-        <label>Municipality:</label><input type="text" name="municipality" required><br>
-        <label>Barangay:</label><input type="text" name="barangay" required><br> -->
-        <!-- <label>Zipcode:</label><input type="text" name="zipcode" required><br> -->
+        
         <h3>Address Details</h3>
         <label>Unit Number / House Number:</label><input number="text" name="home_address" required>
         <div class="col-sm-6 mb-3">
