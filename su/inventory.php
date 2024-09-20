@@ -85,8 +85,11 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
         }
         .content {
             flex: 1;
-            padding: 20px;
+           
 
+        }
+        .divin{
+            padding-bottom: 35rem;
         }
         .success {
             color: #28a745;
@@ -158,6 +161,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
 
     <!-- Content -->
     <div class="content">
+        <div class="divin">
         <header>
             <h1>VapeShop - Inventory Management</h1>
         </header>
@@ -193,6 +197,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
 
         <div id="editForm" class="edit-form">
             <h2>Edit Product</h2>
