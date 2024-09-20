@@ -68,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="ph-address-selector.js"></script>
     <title>Register</title>
 </head>
 <body>
     <h2>Register</h2>
     <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
-    
+
     <form method="post" enctype="multipart/form-data">
         <label>Last Name:</label><input type="text" name="last_name" required><br>
         <label>First Name:</label><input type="text" name="first_name" required><br>
@@ -111,5 +112,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
     <a href="login.php">Already have an account? Login</a>
 </body>
-<script src="ph-address-selector.js"></script>
 </html>
