@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $home_address = $_POST['home_address'];
-    $street = $_POST['street'];
+    $region = $_POST['region'];
     $province = $_POST['province'];
     $city = $_POST['city'];
     $barangay = $_POST['barangay'];
@@ -46,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                 // Insert user into database
-                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, birthday, identification_url, email, contact_number, password, home_address, street, province, city, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param('ssssssssssss', $last_name, $first_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $street, $province, $city, $barangay);
+                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, birthday, identification_url, email, contact_number, password, home_address, region, province, city, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('ssssssssssss', $last_name, $first_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $region, $province, $city, $barangay);
                 $stmt->execute();
                 header("Location: login.php");
                 exit;
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Unit Number / House Number:</label><input number="text" name="home_address" required>
         <div class="col-sm-6 mb-3">
             <label class="form-label">Region *</label>
-            <select name="street" class="form-control form-control-md" id="region"></select>
+            <select name="region" class="form-control form-control-md" id="region"></select>
             <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
         </div>
         <div class="col-sm-6 mb-3">
