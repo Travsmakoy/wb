@@ -418,55 +418,66 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
                 <span class="close" onclick="closeModal('productModal')">&times;</span>
                 <h2>Manage Products</h2>
                 <div class="form-section">
-                    <h3>Add New Product</h3>
-                    <form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="add_product">
-                        <div class="form-group">
-                            <label for="category_id">Category:</label>
-                            <select id="category_id" name="category_id" required onchange="loadBrands(this.value)">
-                                <option value="">Select Category</option>
-                                <?php foreach ($categories as $category): ?>
-                                    <option value="<?php echo htmlspecialchars($category['category_id']); ?>">
-                                        <?php echo htmlspecialchars($category['category_name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="brand_id">Brand:</label>
-                            <select id="brand_id" name="brand_id" required>
-                                <option value="">Select Brand</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="product_name">Product Name:</label>
-                            <input type="text" id="product_name" name="product_name" required>
-                        </div>
-                        <label for="price">Price:</label>
-                            <input type="number" id="price" name="price" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="flavor">Flavor:</label>
-                            <input type="text" id="flavor" name="flavor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="color">Color:</label>
-                            <input type="text" id="color" name="color" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="puffs">Puffs:</label>
-                            <input type="number" id="puffs" name="puffs" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea id="description" name="description" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Image:</label>
-                            <input type="file" id="image" name="image" accept="image/*" required>
-                        </div>
-                        <button type="submit">Add Product</button>
-                    </form>
+                <h2>Add New Product</h2>
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="add_product">
+
+                <div class="form-group">
+                    <label for="category_id">Category:</label>
+                    <select id="category_id" name="category_id" required onchange="loadBrands(this.value)">
+                        <option value="">Select Category</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo htmlspecialchars($category['category_id']); ?>">
+                                <?php echo htmlspecialchars($category['category_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="brand_id">Brand:</label>
+                    <select id="brand_id" name="brand_id" required>
+                        <option value="">Select Brand</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="product_name">Product Name:</label>
+                    <input type="text" id="product_name" name="product_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" id="price" name="price" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="flavor">Flavor:</label>
+                    <input type="text" id="flavor" name="flavor" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color">
+                 </div>
+
+                <div class="form-group">
+                    <label for="puffs">Puffs:</label>
+                    <input type="number" id="puffs" name="puffs">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Product Image:</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit">Add Product</button>
+            </form>
                 </div>
                 <h3>Existing Products</h3>
                 <div class="table-responsive">
@@ -606,9 +617,18 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             }
 
             function loadBrands(categoryId) {
-                // Implement AJAX to load brands based on selected category
-            }
+            const brandSelect = document.getElementById('brand_id');
+            brandSelect.innerHTML = '<option value="">Select Brand</option>'; // Reset brand select options
 
+            <?php foreach ($brands as $brand): ?>
+            if (categoryId == '<?php echo $brand['category_id']; ?>') {
+                const option = document.createElement('option');
+                option.value = '<?php echo $brand['brand_id']; ?>';
+                option.textContent = '<?php echo $brand['brand_name']; ?>';
+                brandSelect.appendChild(option);
+            }
+            <?php endforeach; ?>
+        }
             // Close modals when clicking outside of them
             window.onclick = function(event) {
                 const modals = document.getElementsByClassName("modal");
