@@ -594,7 +594,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
                         <tbody>
                             <?php foreach ($brands as $brand): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($category['category_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($brand['brand_id']); ?></td>
                                     <td><?php echo htmlspecialchars($brand['brand_name']); ?></td>
                                     <td class="action-buttons">
                                         <a href="?delete_brand=<?php echo $brand['brand_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
