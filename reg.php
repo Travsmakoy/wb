@@ -4,7 +4,6 @@ require_once 'conf/config.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $last_name = $_POST['last_name'];
     $first_name = $_POST['first_name'];
-    $middle_name = $_POST['middle_name'];
     $birthday = $_POST['birthday'];
     $email = $_POST['email'];
     $contact_number = $_POST['contact_number'];
@@ -14,9 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $street = $_POST['street'];
     $province = $_POST['province'];
     $city = $_POST['city'];
-    $municipality = $_POST['municipality'];
     $barangay = $_POST['barangay'];
-    $zipcode = $_POST['zipcode'];
     
     // Age validation
     $dob = new DateTime($birthday);
@@ -49,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                 // Insert user into database
-                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, middle_name, birthday, identification_url, email, contact_number, password, home_address, street, province, city, municipality, barangay, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param('sssssssssssssss', $last_name, $first_name, $middle_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $street, $province, $city, $municipality, $barangay, $zipcode);
+                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, birthday, identification_url, email, contact_number, password, home_address, street, province, city, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('ssssssssssss', $last_name, $first_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $street, $province, $city, $barangay);
                 $stmt->execute();
                 header("Location: login.php");
                 exit;
@@ -74,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Register</h2>
     <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
     <form method="post" enctype="multipart/form-data">
-        <label>Last Name:</label><input type="text" name="last_name" required><br>
         <label>First Name:</label><input type="text" name="first_name" required><br>
+        <label>Last Name:</label><input type="text" name="last_name" required><br>
         <label>Birthday:</label><input type="date" name="birthday" required><br>
         <label>Identification Upload (Valid ID):</label><input type="file" name="identification" required><br>
         <label>Email Address:</label><input type="email" name="email" required><br>
@@ -95,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
         </div>
         <div class="col-sm-6 mb-3">
-            <label class="form-label">City / Municipality *</label>
+            <label class="form-label">City *</label>
             <select name="city" class="form-control form-control-md" id="city"></select>
             <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
         </div>
