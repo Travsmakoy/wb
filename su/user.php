@@ -208,8 +208,7 @@ if ($result->num_rows > 0) {
                                     <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['home_address'] . ', ' . $row['city'] . ', ' . $row['province']); ?></td>
-                                    <td>
+                                    <td><?php echo htmlspecialchars($row['home_address'] . ', '  . $row['barangay'].  ', ' . $row['city'] . ', ' . $row['province']); ?></td>                                    <td>
                                         <img src="<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>" 
                                              alt="Valid ID" style="width: 50px; cursor: pointer;" 
                                              onclick="showImage('<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>')">
@@ -252,8 +251,7 @@ if ($result->num_rows > 0) {
                                     <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['home_address'] . ', ' . $row['city'] . ', ' . $row['province']); ?></td>
-                                    <td>
+                                    <td><?php echo htmlspecialchars($row['home_address'] . ', '  . $row['barangay'].  ', ' . $row['city'] . ', ' . $row['province']); ?></td>                                    <td>
                                         <img src="<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>" 
                                              alt="Valid ID" style="width: 50px; cursor: pointer;" 
                                              onclick="showImage('<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>')">
