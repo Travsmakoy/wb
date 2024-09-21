@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $home_address = $_POST['home_address'];
-    $region = $_POST['region'];
-    $province = $_POST['province'];
-    $city = $_POST['city'];
-    $barangay = $_POST['barangay'];
+    $region = $_POST['region_text']; // Use text field instead of the select value
+    $province = $_POST['province_text']; // Use text field instead of the select value
+    $city = $_POST['city_text']; // Use text field instead of the select value
+    $barangay = $_POST['barangay_text']; // Use text field instead of the select value
     
     // Age validation
     $dob = new DateTime($birthday);
@@ -34,25 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             $error = "Email already exists!";
         } else {
-            // Handle file upload
-            $target_dir = "su/cstmr-id/";
-            if (!file_exists($target_dir)) {
-                mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
-            }
-            $target_file = $target_dir . uniqid() . '-' . basename($_FILES["identification"]["name"]);
+            // Check if contact number already exists
+            $stmt = $conn->prepare("SELECT id FROM users WHERE contact_number = ?");
+            $stmt->bind_param('s', $contact_number);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            if (move_uploaded_file($_FILES["identification"]["tmp_name"], $target_file)) {
-                // Hash password
-                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-                // Insert user into database
-                $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, birthday, identification_url, email, contact_number, password, home_address, region, province, city, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param('ssssssssssss', $last_name, $first_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $region, $province, $city, $barangay);
-                $stmt->execute();
-                header("Location: login.php");
-                exit;
+            if ($result->num_rows > 0) {
+                $error = "Contact number already exists!";
             } else {
-                $error = "Failed to upload file.";
+                // Handle file upload
+                $target_dir = "su/cstmr-id/";
+                if (!file_exists($target_dir)) {
+                    mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+                }
+                $target_file = $target_dir . uniqid() . '-' . basename($_FILES["identification"]["name"]);
+
+                if (move_uploaded_file($_FILES["identification"]["tmp_name"], $target_file)) {
+                    // Hash password
+                    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+                    // Insert user into database
+                    $stmt = $conn->prepare("INSERT INTO users (last_name, first_name, birthday, identification_url, email, contact_number, password, home_address, region, province, city, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param('ssssssssssss', $last_name, $first_name, $birthday, $target_file, $email, $contact_number, $hashed_password, $home_address, $region, $province, $city, $barangay);
+                    $stmt->execute();
+                    header("Location: login.php");
+                    exit;
+                } else {
+                    $error = "Failed to upload file.";
+                }
             }
         }
     }
@@ -80,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Password:</label><input type="password" name="password" required><br>
         <label>Confirm Password:</label><input type="password" name="confirm_password" required><br>
         <h3>Address Details</h3>
-        <label>Unit Number / House Number:</label><input number="text" name="home_address" required>
+        <label>Unit Number / House Number:</label><input type="text" name="home_address" required>
         <div class="col-sm-6 mb-3">
             <label class="form-label">Region *</label>
             <select name="region" class="form-control form-control-md" id="region"></select>
@@ -100,10 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label class="form-label">Barangay *</label>
             <select name="barangay" class="form-control form-control-md" id="barangay"></select>
             <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-        </div>
-     
-        <div class="col-md-6">
-
         </div>
 
         <button type="submit">Register</button>
