@@ -303,4 +303,5 @@
         }
     </script>
 </body>
+<?php include 'chat-widget.php'; ?>
 </html>
