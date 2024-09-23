@@ -15,7 +15,7 @@ $is_logged_in = isset($_SESSION['user_id']);
         <div class="navbar-container">
             <div class="logo">
                 <a href="index.php" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="logo.png" alt="Innocuous Mist" class="navbar-logo">
+                    <img src="assets/logo.png" alt="Innocuous Mist" class="navbar-logo">
                     <!-- <span class="navbar-brand">Innocuous Mist</span> -->
                 </a>
             </div>
