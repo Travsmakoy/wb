@@ -439,7 +439,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         <h2>Admin Panel</h2>
         <nav>
             <a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="inventory.php"><i class="fas fa-boxes"></i> Inventory</a>
+            <a href="#"><i class="fas fa-boxes"></i> Inventory</a>
             <a href="#"><i class="fas fa-comments"></i> Chats</a>
             <a href="user.php"><i class="fas fa-users"></i> Users</a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>

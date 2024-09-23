@@ -44,13 +44,13 @@ if ($result->num_rows > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Existing styles */
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #333;
             --background-color: #f4f4f4;
             --text-color: #333;
             --sidebar-width: 250px;
+            --transition-time: 0.3s;
         }
 
         body {
@@ -66,6 +66,8 @@ if ($result->num_rows > 0) {
             color: #fff;
             height: 100vh;
             position: fixed;
+            padding: 1rem;
+            transition: width var(--transition-time);
         }
 
         .sidebar h2 {
@@ -79,7 +81,7 @@ if ($result->num_rows > 0) {
             margin: 1rem 0;
             padding: 0.75rem;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color var(--transition-time);
         }
 
         .sidebar a:hover {
@@ -90,7 +92,9 @@ if ($result->num_rows > 0) {
             flex: 1;
             padding: 2rem;
             margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition-time);
         }
+
         .tabs {
             margin-top: 2rem;
             display: flex;
@@ -103,6 +107,7 @@ if ($result->num_rows > 0) {
             background-color: #fff;
             border: 1px solid #ddd;
             margin-right: 5px;
+            transition: background-color var(--transition-time);
         }
 
         .tab.active {
@@ -112,10 +117,13 @@ if ($result->num_rows > 0) {
 
         .tab-content {
             display: none;
+            opacity: 0;
+            transition: opacity var(--transition-time);
         }
 
         .tab-content.active {
             display: block;
+            opacity: 1;
         }
 
         .table {
@@ -150,11 +158,28 @@ if ($result->num_rows > 0) {
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            opacity: 0;
+            transition: opacity var(--transition-time);
         }
 
         .image-popup img {
             max-width: 90%;
             max-height: 90%;
+            animation: zoomIn 0.3s ease-in-out;
+        }
+
+        .image-popup.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+            }
+            to {
+                transform: scale(1);
+            }
         }
 
         footer {
@@ -181,8 +206,8 @@ if ($result->num_rows > 0) {
         </header>
 
         <section class="tabs">
-            <div class="tab active" onclick="showTab('unverified')">Unverified Users</div>
-            <div class="tab" onclick="showTab('verified')">Verified Users</div>
+            <div class="tab active" data-tab="unverified">Unverified Users</div>
+            <div class="tab" data-tab="verified">Verified Users</div>
         </section>
 
         <section class="form-section">
@@ -208,7 +233,8 @@ if ($result->num_rows > 0) {
                                     <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['home_address'] . ', '  . $row['barangay'].  ', ' . $row['city'] . ', ' . $row['province']); ?></td>                                    <td>
+                                    <td><?php echo htmlspecialchars($row['home_address'] . ', ' . $row['barangay'] . ', ' . $row['city'] . ', ' . $row['province']); ?></td>
+                                    <td>
                                         <img src="<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>" 
                                              alt="Valid ID" style="width: 50px; cursor: pointer;" 
                                              onclick="showImage('<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>')">
@@ -251,7 +277,8 @@ if ($result->num_rows > 0) {
                                     <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['home_address'] . ', '  . $row['barangay'].  ', ' . $row['city'] . ', ' . $row['province']); ?></td>                                    <td>
+                                    <td><?php echo htmlspecialchars($row['home_address'] . ', ' . $row['barangay'] . ', ' . $row['city'] . ', ' . $row['province']); ?></td>
+                                    <td>
                                         <img src="<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>" 
                                              alt="Valid ID" style="width: 50px; cursor: pointer;" 
                                              onclick="showImage('<?php echo htmlspecialchars(str_replace('su/', '', $row['identification_url'])); ?>')">
@@ -268,35 +295,42 @@ if ($result->num_rows > 0) {
             </div>
         </section>
 
-        <div class="image-popup" id="imagePopup" onclick="this.style.display='none'">
-            <img id="popupImage" src="" alt="Popup Image">
+        <div class="image-popup" id="imagePopup">
+            <img id="popupImage" src="" alt="User ID">
         </div>
-
+        
         <footer>
-            <p>&copy; 2024 Innocuous Mist Vapeshop. All rights reserved.</p>
+            &copy; 2024 Vapeshop Admin Panel. All rights reserved.
         </footer>
     </main>
 
     <script>
-        function showTab(tab) {
-            var tabs = document.querySelectorAll('.tab');
-            var contents = document.querySelectorAll('.tab-content');
-            tabs.forEach(function (el) {
-                el.classList.remove('active');
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
             });
-            contents.forEach(function (el) {
-                el.classList.remove('active');
-            });
-            document.querySelector('.tab[onclick="showTab(\'' + tab + '\')"]').classList.add('active');
-            document.getElementById(tab).classList.add('active');
-        }
+        });
+
+        // Image modal functionality
+        const popup = document.getElementById('imagePopup');
+        const popupImage = document.getElementById('popupImage');
 
         function showImage(src) {
-            var popup = document.getElementById('imagePopup');
-            var popupImage = document.getElementById('popupImage');
             popupImage.src = src;
-            popup.style.display = 'flex';
+            popup.classList.add('show');
         }
+
+        popup.addEventListener('click', function() {
+            popup.classList.remove('show');
+        });
     </script>
 </body>
 </html>
