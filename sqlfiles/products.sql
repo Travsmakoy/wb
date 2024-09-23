@@ -1,0 +1,1 @@
+INSERT INTO products (product_id, category_id, brand_id, product_name, price, flavor, color, puffs, description, img_dir) VALUES (2, 3, 3, 'TEST DISPO', '50000.00', 'MENTHOL', 'BLUE', 8000, 'THIS I', '../uploads/categ_pods.png');
