@@ -74,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Kanit|Space+Grotesk">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Register</title>
     <style>
@@ -82,20 +85,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .success { color: green; }
     </style>
 </head>
-<body>
+<body> 
+      <div class="container">
+        <div class="form-container mt-5">
+            <div class="form-content">
+                <img src="assets/mist-logo-withoutname.png" alt="Image" class="img-fluid">
+                <div class="form-fields">
     <h2>Register</h2>
     <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
-
+ 
     <form method="post" enctype="multipart/form-data" id="registrationForm">
         <!-- First Page (Basic Info) -->
         <div id="page1">
-            <label>First Name:</label><input type="text" name="first_name" id="first_name" required><br>
-            <label>Last Name:</label><input type="text" name="last_name" id="last_name" required><br>
-            <label>Birthday:</label><input type="date" name="birthday" id="birthday" required><br>
-            <label>Email Address:</label><input type="email" name="email" id="email" required><br>
-            <label>Contact Number:</label><input type="text" name="contact_number" id="contact_number" required><br>
-            <label>Password:</label><input type="password" name="password" id="password" required><br>
-            <label>Confirm Password:</label><input type="password" name="confirm_password" id="confirm_password" required><br>
+            <input placeholder="First Name" type="text" name="first_name" id="first_name" required><br>
+            <input placeholder="Last Name" type="text" name="last_name" id="last_name" required><br>
+            <input type="date" name="birthday" id="birthday" required><br>
+            <input placeholder="Email Address" type="email" name="email" id="email" required><br>
+            <input placeholder="Contact Number" type="text" name="contact_number" id="contact_number" required><br>
+            <input placeholder="Password" type="password" name="password" id="password" required><br>
+            <input placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password" required><br>
             <button type="button" onclick="nextPage()">Next</button>
         </div>
 
@@ -131,11 +139,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="button" onclick="prevPage()">Back</button>
             <button type="submit">Register</button>
-        </div>
+   
     </form>
-
+    </div>
+    </div>
+    </div>
+    </div>
     <a href="login.php">Already have an account? Login</a>
-
+  
     <script>
         function nextPage() {
             // Basic validation for page 1 fields
