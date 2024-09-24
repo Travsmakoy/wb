@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: opacity 0.3s ease;
         }
         button:hover {
-            opacity: 0.9;
+            opacity: 0.8;
         }
         .register-link {
             text-align: center;
