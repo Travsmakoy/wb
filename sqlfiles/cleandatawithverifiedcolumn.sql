@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `contact_number` varchar(15) NOT NULL,
   `password` varchar(255) NOT NULL,
   `home_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `street` varchar(100) NOT NULL,
+  `region` varchar(100) NOT NULL,
   `province` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `municipality` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
