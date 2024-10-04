@@ -58,6 +58,7 @@ if ($result->num_rows > 0) {
             display: flex;
             background-color: var(--background-color);
             color: var(--text-color);
+            margin: 0;
         }
 
         .sidebar {
