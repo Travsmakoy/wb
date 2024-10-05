@@ -76,13 +76,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Kanit|Space+Grotesk">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Register</title>
     <style>
         .hidden { display: none; }
         .error { color: red; }
         .success { color: green; }
+        button:hover {
+    opacity: 0.8;
+}
+
     </style>
 </head>
 <body> 
@@ -91,12 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-content">
                 <img src="assets/mist-logo-withoutname.png" alt="Image" class="img-fluid">
                 <div class="form-fields">
-    <h2>Register</h2>
+   
     <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
  
     <form method="post" enctype="multipart/form-data" id="registrationForm">
         <!-- First Page (Basic Info) -->
         <div id="page1">
+        <h2>Register</h2>
             <input placeholder="First Name" type="text" name="first_name" id="first_name" required><br>
             <input placeholder="Last Name" type="text" name="last_name" id="last_name" required><br>
             <input type="date" name="birthday" id="birthday" required><br>
@@ -105,17 +110,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input placeholder="Password" type="password" name="password" id="password" required><br>
             <input placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password" required><br>
             <button type="button" onclick="nextPage()">Next</button>
+            <p class = "register-link">Already have an account? <span> <a href="login.php"> Login</a></span></p>
+
         </div>
 
         <!-- Second Page (Address and ID Upload) -->
         <div id="page2" class="hidden">
-            <h3>Address Details</h3>
+            <h2>Address Details</h2>
             <label>Unit Number / House Number:</label><input type="text" name="home_address" id="home_address" required><br>
             <label>Identification Upload (Valid ID):</label><input type="file" name="identification" id="identification" required><br>
 
             <div class="col-sm-6 mb-3">
                 <label>Region *</label>
-                <select name="region" class="form-control" id="region"></select>
+                <select name="region" class="form-control" id="region">
+                
+
+                </select>
                 <input type="hidden" name="region_text" id="region-text" required>
             </div>
 
@@ -139,13 +149,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="button" onclick="prevPage()">Back</button>
             <button type="submit">Register</button>
+            <p class = "register-link">Already have an account? <span> <a href="login.php" > Login</a></span></p>
    
     </form>
     </div>
     </div>
     </div>
     </div>
-    <a href="login.php">Already have an account? Login</a>
+    
   
     <script>
         function nextPage() {

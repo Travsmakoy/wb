@@ -1,16 +1,15 @@
 <?php
-$servername = "26b.h.filess.io";
-$username = "inno_samehimdig";
-$password = "travsmakoy55";
-$dbname = "inno_samehimdig";
-$port = 3307; // Add the port here
+// Database connection settings
+$host = 'localhost'; // or your database host
+$db = 'vapeshop1'; // the name of your database
+$user = 'root'; // your MySQL username
+$pass = 'Pokemon@88'; // your MySQL password
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
+// Create a new mysqli instance and connect to the database
+$conn = new mysqli($host, $user, $pass, $db);
 
-// Check connection
+// Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// echo "Connected successfully";
 ?>

@@ -2,16 +2,24 @@ body {
     background-color: #0b062c;
     color: white;
     font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    max-height: 100vh;
 }
 
+.arrow-down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
 .container {
     margin-top: 5rem;
+    max-width: 30rem;
+    height: 500px;
 }
 
 .form-container {
-    max-width: 800px;
+    max-width: 600px;
     margin: auto;
-    padding: 20px;
+    padding: 60px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     box-shadow: 0px 0px 7px 7px black;
@@ -27,34 +35,46 @@ body {
     max-width: 40%;
     height: auto;
     border-radius: 10px;
-    margin-bottom: 20px;
+   
 }
 
 .form-fields {
     width: 100%;
 }
 
-.form-fields h2 {
+h2 {
     padding-top: 2rem;
     font-family: "Tourney", sans-serif;
     padding-bottom: 2rem;
     text-align: center;
     font-weight: 900;
-    background: linear-gradient(to right, rgb(54, 103, 176), rgb(80, 80, 196), rgb(165, 67, 192), rgb(14, 1, 14));
+    background: linear-gradient(to right, rgb(54, 103, 176), rgb(80, 80, 196), rgb(165, 67, 192), rgb(118, 13, 118));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+}
+.register-link a {
+            
+            color: #0fadf2;
+            text-decoration: none;
+        }
+.register-link a:hover {
+    text-decoration: underline;
 }
 
 input, select {
     width: 100%;
     padding: 10px;
+    position:static;
+    align-items: center;
     margin-bottom: 15px;
     border-radius: 5px;
     border: 2px solid aqua;
+    
 }
 
 button {
     width: 100%;
+    
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -63,47 +83,43 @@ button {
     font-size: 16px;
     font-weight: 800;
     cursor: pointer;
-    margin-top: 0.5rem; /* Add margin for gap */
+    margin-top: 0.5rem;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
 
-.bottom {
-    text-align: center;
-    display: flex;
+.bottom-elem {
+    display: flex;    
     gap: 0.5rem;
-    font-weight: 500;
+    margin-top: 0.5rem;
 }
-
-.bottom p {
-    color: rgb(222, 42, 222);
+button:hover {
+    opacity: 0.8;
 }
 
 .separator {
     border: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 1rem 0; /* Space around the separator */
+    margin: 1rem 0;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
     .form-content {
-        flex-direction: column; /* Stack image and fields vertically */
-        align-items: center; /* Center items */
-        text-align: center; /* Center text for smaller screens */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .form-content img {
-        max-width: 100%; /* Image takes full width on mobile */
-        margin-bottom: 15px; /* Space below the image */
+        max-width: 100%;
+        margin-bottom: 15px;
     }
 
     input, select {
-        width: 100%; /* Inputs take full width */
+        width: 100%;
     }
 
     button {
-        max-width: 100%; /* Button takes full width */
+        max-width: 100%;
     }
+    
 }

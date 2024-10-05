@@ -262,9 +262,36 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+        #ManageProducts{
+            background-color: #2f987c;
+            
+        }
+        #ManageCategories{
+            background-color: #296dcc;
+            
+        }
+        #ManageBrands{
+            background-color: #a0a0a0;
+            
+        }
+        #icon1{
+            color: darkgreen;
+            
+        }
+        #icon2{
+            color: darkblue;
+            
+        }
+        #icon3{
+            color: brown;
+            
+        }
+
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 5px 5px;
+            
         }
 
         .card h3 {
@@ -274,8 +301,10 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         .card-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            font-family: "Tourney", sans-serif;
+            
         }
+
 
         .modal {
             display: none;
@@ -348,13 +377,15 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             color: white;
             padding: 0.75rem 1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 17px;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #034a1e;
+            font-size: 19px; 
         }
 
         .table-responsive {
@@ -395,6 +426,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            
         }
 
         .btn-edit {
@@ -432,6 +464,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             max-width: 600px;
             border-radius: 10px;
         }
+        
     </style>
 </head>
 <body>
@@ -458,19 +491,19 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         <?php endif; ?>
 
         <section id="management-cards" class="card-container">
-            <div class="card" onclick="openModal('productModal')">
-                <div class="card-icon"><i class="fas fa-box"></i></div>
-                <h3>Manage Products</h3>
+            <div class="card" id = "ManageProducts" onclick="openModal('productModal')">
+                <div class="card-icon" id = "icon1" ><i class="fas fa-box"></i></div>
+                <h2>Manage Products</h2>
                 <p>Add new products</p>
             </div>
-            <div class="card" onclick="openModal('categoryModal')">
-                <div class="card-icon"><i class="fas fa-tags"></i></div>
-                <h3>Manage Categories</h3>
+            <div class="card" id = "ManageCategories" onclick="openModal('categoryModal')">
+                <div class="card-icon" id = "icon2"><i class="fas fa-tags"></i></div>
+                <h2>Manage Categories</h3>
                 <p>Add and delete product categories</p>
             </div>
-            <div class="card" onclick="openModal('brandModal')">
-                <div class="card-icon"><i class="fas fa-copyright"></i></div>
-                <h3>Manage Brands</h3>
+            <div class="card" id = "ManageBrands" id = "ManageBr" onclick="openModal('brandModal')">
+                <div class="card-icon" id = "icon3"><i class="fas fa-copyright"></i></div>
+                <h2>Manage Brands</h2>
                 <p>Add and delete product brands</p>
             </div>
         </section>
