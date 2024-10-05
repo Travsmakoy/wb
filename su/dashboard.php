@@ -186,7 +186,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
-            background-color: var(--background-color);
+            background-color: #0e153e;
             color: var(--text-color);
         }
 
@@ -201,6 +201,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
         .sidebar h2 {
             margin-bottom: 2rem;
+            
         }
 
         .sidebar a {
@@ -290,7 +291,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 5px 5px;
+            box-shadow: 5px 5px darkblue;
             
         }
 
@@ -481,7 +482,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
     <main class="content">
         <header class="dashboard-header">
-            <h1>VapeShop - Admin Dashboard & Inventory</h1>
+            <h1 style = "color:gray">VapeShop - Admin Dashboard & Inventory</h1>
         </header>
 
         <?php if (!empty($message)): ?>
@@ -724,7 +725,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
         <!-- Products Table -->
         <section id="products-table">
-            <h2>Products</h2>
+            <h2 style = "color:gray">Products</h2>
             <div class="table-responsive">
                 <table>
                     <thead>
