@@ -203,9 +203,7 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
                     }
                 }, 'json');
             });
-
-            // Refresh chat list every 10 seconds
-            setInterval(populateChatList, 10000);
+            setInterval(populateChatList, 3000);
         });
     </script>
 </body>

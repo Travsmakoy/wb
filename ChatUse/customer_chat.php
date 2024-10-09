@@ -166,8 +166,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
                 }, 'json');
             });
 
-            // Refresh messages every 5 seconds
-            setInterval(showMessages, 5000);
+            setInterval(showMessages, 3000);
         });
     </script>
 </body>
