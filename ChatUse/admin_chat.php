@@ -35,7 +35,7 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             flex-direction: column;
         }
         .header {
-            padding: 20px;
+            
             background-color: #464775;
             color: white;
         }
@@ -47,7 +47,7 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             padding: 15px 20px;
             border-bottom: 1px solid #e1dfdd;
             cursor: pointer;
-            display: flex;
+            
             justify-content: space-between;
             align-items: center;
         }
@@ -76,8 +76,9 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
         .message {
             margin-bottom: 15px;
             padding: 10px;
-            border-radius: 5px;
-            max-width: 70%;
+            border-radius: 20px;
+       
+            max-width: 22%;
         }
         .message.received {
             background-color: #f3f2f1;
@@ -87,6 +88,8 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             background-color: #e1dfdd;
             align-self: flex-end;
             margin-left: auto;
+            text-align: right;
+            
         }
         .chat-input {
             padding: 20px;

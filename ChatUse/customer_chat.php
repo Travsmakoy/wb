@@ -72,7 +72,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             margin-bottom: 15px;
             padding: 10px;
             border-radius: 5px;
-            max-width: 70%;
+            max-width: 22%;
         }
         .message.received {
             background-color: #f3f2f1;
@@ -82,6 +82,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             background-color: #e1dfdd;
             align-self: flex-end;
             margin-left: auto;
+            text-align: right;
         }
         .chat-input {
             padding: 20px;
