@@ -47,9 +47,16 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             padding: 15px 20px;
             border-bottom: 1px solid #e1dfdd;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        /* Unread chat design */
+        .chat-item.unread {
+            background-color: #eaf6ff; /* Light blue for unread chats */
         }
         .chat-item:hover, .chat-item.active {
-            background-color: #e1dfdd;
+            background-color: #d0e0f2; /* A slightly darker shade for hover/active */
         }
         .chat-area {
             flex-grow: 1;
@@ -104,13 +111,21 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             border-radius: 5px;
             cursor: pointer;
         }
+        /* Unread badge style */
+        .unread-badge {
+            background-color: #ff5e5e; /* Red badge for unread */
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <div class="header">
-                <h2>Admin Chat</h2>
+                <h2>Innocuous Mist</h2>
             </div>
             <div class="chat-list" id="chatList">
                 <!-- Chat list will be populated here -->
@@ -142,13 +157,14 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             const chatList = $('#chatList');
             chatList.empty();
             chats.forEach(chat => {
-                console.log('Chat object:', chat); // Debug: Log each chat object
                 const unreadBadge = chat.unread_count > 0 ? `<span class="unread-badge">${chat.unread_count}</span>` : '';
-                const customerName = chat.customer_name || 'Unknown'; // Fallback if customer_name is undefined
+                const unreadClass = chat.unread_count > 0 ? 'unread' : ''; // Apply 'unread' class if unread messages exist
+                const customerName = chat.customer_name || 'Unknown';
                 const lastMessage = chat.last_message || 'No messages yet';
                 chatList.append(`
-                    <div class="chat-item" data-id="${chat.id}">
-                        <div>${customerName} ${unreadBadge}</div>
+                    <div class="chat-item ${unreadClass}" data-id="${chat.id}">
+                        <div>${customerName}</div>
+                        <div>${unreadBadge}</div>
                         <small>${lastMessage}</small>
                     </div>
                 `);
@@ -165,9 +181,8 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             const chatMessages = $('#chatMessages');
             chatMessages.empty();
             messages.forEach(message => {
-                console.log('Message object:', message); // Debug: Log each message object
                 const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
-                const senderName = message.sender_name || 'Unknown'; // Fallback if sender_name is undefined
+                const senderName = message.sender_name || 'Unknown';
                 chatMessages.append(`
                     <div class="message ${messageClass}">
                         <strong>${senderName}</strong>
@@ -188,7 +203,7 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
             currentChatId = $(this).data('id');
             $('.chat-item').removeClass('active');
             $(this).addClass('active');
-            const customerName = $(this).find('div').text().split(' ')[0]; // Get only the customer name
+            const customerName = $(this).find('div').first().text(); // Get only the customer name
             $('#currentCustomer').text(customerName);
             showMessages(currentChatId);
             $(this).find('.unread-badge').remove();
