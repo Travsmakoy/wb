@@ -10,7 +10,7 @@ $admin_id = $_SESSION['user_id'];
 
 $sql = "SELECT DISTINCT 
             u.id, 
-            u.username, 
+            u.username as customer_name, 
             m.content as last_message,
             m.timestamp as last_message_time,
             (SELECT COUNT(*) FROM messages 

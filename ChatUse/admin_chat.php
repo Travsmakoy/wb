@@ -134,77 +134,105 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        let currentChatId = null;
+  $(document).ready(function() {
+    let currentChatId = null;
 
-        function populateChatList() {
-            $.get('get_chats.php', function(chats) {
-                const chatList = $('#chatList');
-                chatList.empty();
-                chats.forEach(chat => {
-                    const unreadBadge = chat.unread_count > 0 ? `<span class="unread-badge">${chat.unread_count}</span>` : '';
-                    chatList.append(`
-                        <div class="chat-item" data-id="${chat.id}">
-                            <div>New message ${unreadBadge}</div>
-                            <small>${chat.last_message || 'No messages yet'}</small>
-                        </div>
-                    `);
-                });
-                attachChatItemHandlers();
-            }, 'json');
-        }
-
-        function showMessages(chatId) {
-            $.get('get_messages.php', { other_user_id: chatId }, function(messages) {
-                const chatMessages = $('#chatMessages');
-                chatMessages.empty();
-                messages.forEach(message => {
-                    const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
-                    chatMessages.append(`
-                        <div class="message ${messageClass}">
-                            <strong>${message.sender_name}</strong>
-                            <p>${message.content}</p>
-                            <small>${message.timestamp}</small>
-                        </div>
-                    `);
-                });
-                chatMessages.scrollTop(chatMessages[0].scrollHeight);
-            }, 'json');
-        }
-
-        function attachChatItemHandlers() {
-            $('.chat-item').click(function() {
-                currentChatId = $(this).data('id');
-                $('.chat-item').removeClass('active');
-                $(this).addClass('active');
-                const customerName = $(this).find('div').text().replace('New message', '').trim();
-                $('#currentCustomer').text(customerName);
-                showMessages(currentChatId);
-                $(this).find('.unread-badge').remove();
+    function populateChatList() {
+        $.get('get_chats.php', function(chats) {
+            const chatList = $('#chatList');
+            chatList.empty();
+            chats.forEach(chat => {
+                console.log('Chat object:', chat); // Debug: Log each chat object
+                const unreadBadge = chat.unread_count > 0 ? `<span class="unread-badge">${chat.unread_count}</span>` : '';
+                const customerName = chat.customer_name || 'Unknown'; // Fallback if customer_name is undefined
+                const lastMessage = chat.last_message || 'No messages yet';
+                chatList.append(`
+                    <div class="chat-item" data-id="${chat.id}">
+                        <div>${customerName} ${unreadBadge}</div>
+                        <small>${lastMessage}</small>
+                    </div>
+                `);
             });
-        }
-
-        $(document).ready(function() {
-            populateChatList();
-
-            $('#chatForm').submit(function(e) {
-                e.preventDefault();
-                if (!currentChatId) return;
-
-                const content = $('#messageInput').val();
-                if (!content) return;
-
-                $.post('send_message.php', {
-                    receiver_id: currentChatId,
-                    content: content
-                }, function(response) {
-                    if (response.success) {
-                        $('#messageInput').val('');
-                        showMessages(currentChatId);
-                    }
-                }, 'json');
-            });
-            setInterval(populateChatList, 3000);
+            attachChatItemHandlers();
+        }, 'json')
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching chats:", textStatus, errorThrown);
         });
+    }
+
+    function showMessages(chatId) {
+        $.get('get_messages.php', { other_user_id: chatId }, function(messages) {
+            const chatMessages = $('#chatMessages');
+            chatMessages.empty();
+            messages.forEach(message => {
+                console.log('Message object:', message); // Debug: Log each message object
+                const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
+                const senderName = message.sender_name || 'Unknown'; // Fallback if sender_name is undefined
+                chatMessages.append(`
+                    <div class="message ${messageClass}">
+                        <strong>${senderName}</strong>
+                        <p>${message.content || ''}</p>
+                        <small>${message.timestamp || ''}</small>
+                    </div>
+                `);
+            });
+            chatMessages.scrollTop(chatMessages[0].scrollHeight);
+        }, 'json')
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching messages:", textStatus, errorThrown);
+        });
+    }
+
+    function attachChatItemHandlers() {
+        $('.chat-item').click(function() {
+            currentChatId = $(this).data('id');
+            $('.chat-item').removeClass('active');
+            $(this).addClass('active');
+            const customerName = $(this).find('div').text().split(' ')[0]; // Get only the customer name
+            $('#currentCustomer').text(customerName);
+            showMessages(currentChatId);
+            $(this).find('.unread-badge').remove();
+        });
+    }
+
+    function sendMessage(content) {
+        if (!currentChatId) {
+            console.error("No chat selected");
+            return;
+        }
+
+        $.post('send_message.php', {
+            receiver_id: currentChatId,
+            content: content
+        }, function(response) {
+            if (response.success) {
+                $('#messageInput').val('');
+                showMessages(currentChatId);
+            } else {
+                console.error("Error sending message:", response.error);
+            }
+        }, 'json')
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error sending message:", textStatus, errorThrown);
+        });
+    }
+
+    populateChatList();
+
+    $('#chatForm').submit(function(e) {
+        e.preventDefault();
+        const content = $('#messageInput').val();
+        if (!content) return;
+        sendMessage(content);
+    });
+
+    setInterval(function() {
+        populateChatList();
+        if (currentChatId) {
+            showMessages(currentChatId);
+        }
+    }, 3000);
+});
     </script>
 </body>
 </html>
