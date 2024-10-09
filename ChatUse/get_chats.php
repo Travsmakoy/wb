@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
+//get_chats.php
 
 if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     exit('Unauthorized');

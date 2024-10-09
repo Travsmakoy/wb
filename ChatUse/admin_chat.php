@@ -14,7 +14,9 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Chat - MS Teams Style</title>
+   
+    <title>Innocuous Mist</title>
+    
     <style>
         body, html {
             margin: 0;
