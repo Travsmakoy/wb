@@ -1,182 +1,197 @@
+<?php
+// customer_chat_widget.php
+// session_start();
+require_once 'conf/config.php';
+
+$isLoggedIn = isset($_SESSION['user_id']) && !$_SESSION['is_admin'];
+$admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc()['id'];
+
+?>
+
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <title>Chatbot Widget</title>
-  <style>
-    /* Chatbot widget container styles */
-    .chatbot-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 350px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Chat Widget</title>
+    <style>
+        /* Widget Icon */
+        .chat-widget-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #464775;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+        }
 
-    /* Chatbot header styles */
-    .chatbot-header {
-      background-color: #0077b6;
-      color: #ffffff;
-      padding: 12px 16px;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      transition: background-color 0.3s ease, width 0.3s ease, height 0.3s ease;
-    }
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            background-color: white;
+            border: 1px solid #e1dfdd;
+        }
 
-    .chatbot-header:hover {
-      background-color: #005a88;
-    }
+        /* Chat Header */
+        .chat-widget-header {
+            background-color: #464775;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
 
-    .chatbot-header.expanded {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      justify-content: flex-start;
-    }
+        /* Chat Messages */
+        .chat-messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
 
-    .chatbot-icon {
-      font-size: 24px;
-    }
+        /* Message Styles */
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
 
-    .chatbot-header-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0;
-    }
+        .message.received {
+            background-color: #f3f2f1;
+            align-self: flex-start;
+        }
 
-    /* Chatbot content area styles */
-    .chatbot-content {
-      padding: 16px;
-      display: none;
-    }
+        .message.sent {
+            background-color: #e1dfdd;
+            align-self: flex-end;
+            margin-left: auto;
+        }
 
-    .chatbot-content h3 {
-      font-size: 18px;
-      margin-top: 0;
-    }
+        /* Chat Input */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f3f2f1;
+            border-top: 1px solid #e1dfdd;
+        }
 
-    /* Chatbot messages container styles */
-    .chatbot-messages {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-bottom: 12px;
-    }
+        .chat-input input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #e1dfdd;
+            border-radius: 5px;
+        }
 
-    /* Individual chatbot message styles */
-    .chatbot-message {
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .chatbot-message:hover {
-      background-color: #f0f0f0;
-    }
-
-    .chatbot-message.user {
-      background-color: #e6f2ff;
-      color: #0077b6;
-    }
-
-    .chatbot-message.bot {
-      background-color: #f0f0f0;
-    }
-
-    /* Chatbot input field styles */
-    .chatbot-input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #cccccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-  </style>
+        .chat-input button {
+            margin-left: 10px;
+            padding: 8px;
+            background-color: #464775;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div class="chatbot-widget">
-    <div class="chatbot-header">
-      <div class="chatbot-icon">💬</div>
-      <h3 class="chatbot-header-title">How can I assist you?</h3>
+
+<!-- Chat Widget Icon -->
+<div class="chat-widget-icon" id="chatWidgetIcon">💬</div>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+    <div class="chat-widget-header">
+        <h3>Chat</h3>
     </div>
-    <div class="chatbot-content">
-      <h3>How can I help you today?</h3>
-      <div class="chatbot-messages">
-        <div class="chatbot-message bot" data-response="I can help you with the order process. What specific questions do you have?">
-          How to order
-        </div>
-        <div class="chatbot-message bot" data-response="Sure, I'd be happy to explain our return and exchange policy. What would you like to know?">
-          Returns and exchanges
-        </div>
-        <div class="chatbot-message bot" data-response="Okay, let me provide some details about our shipping options and delivery timelines.">
-          Shipping information
-        </div>
-      </div>
-      <input type="text" class="chatbot-input" placeholder="Type your message..." />
+    <div class="chat-messages" id="chatMessages">
+        <?php if ($isLoggedIn): ?>
+            <!-- Logged-in user chat -->
+            <div id="chatContent"></div>
+        <?php else: ?>
+            <!-- Static bot messages for guest users -->
+            <div class="message received">
+                <p>Hi, I’m a support bot! How can I help you today?</p>
+            </div>
+            <div class="message received">
+                <p>Please <a href="../login.php">login</a> to chat with an admin.</p>
+            </div>
+        <?php endif; ?>
     </div>
-  </div>
+    <?php if ($isLoggedIn): ?>
+    <!-- Input form only for logged-in users -->
+    <div class="chat-input">
+        <form id="chatForm">
+            <input type="text" id="messageInput" placeholder="Type a message..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <?php endif; ?>
+</div>
 
-  <script>
-    // Add interactivity to the chatbot widget
-    const chatbotWidget = document.querySelector('.chatbot-widget');
-    const chatbotHeader = document.querySelector('.chatbot-header');
-    const chatbotContent = document.querySelector('.chatbot-content');
-    const chatbotInput = document.querySelector('.chatbot-input');
-    const chatbotMessages = document.querySelector('.chatbot-messages');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Toggle chat widget
+    const chatWidgetIcon = document.getElementById('chatWidgetIcon');
+    const chatWidget = document.getElementById('chatWidget');
 
-    // Toggle the visibility and size of the chatbot header on click
-    chatbotHeader.addEventListener('click', () => {
-      chatbotHeader.classList.toggle('expanded');
-      chatbotContent.style.display = chatbotContent.style.display === 'none' ? 'block' : 'none';
+    chatWidgetIcon.addEventListener('click', () => {
+        chatWidget.style.display = chatWidget.style.display === 'none' ? 'flex' : 'none';
     });
 
-    // Close the chatbot widget when clicking outside of it
-    document.addEventListener('click', (event) => {
-      if (!chatbotWidget.contains(event.target)) {
-        chatbotContent.style.display = 'none';
-        chatbotHeader.classList.remove('expanded');
-      }
-    });
+    <?php if ($isLoggedIn): ?>
+    // Fetch and show messages for logged-in users
+    function showMessages() {
+        $.get('ChatUse/get_messages.php', { other_user_id: <?php echo $admin_id; ?> }, function(messages) {
+            const chatMessages = $('#chatContent');
+            chatMessages.empty();
+            messages.forEach(message => {
+                const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
+                chatMessages.append(`
+                    <div class="message ${messageClass}">
+                        <p>${message.content}</p>
+                        <small>${message.timestamp}</small>
+                    </div>
+                `);
+            });
+            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
+        }, 'json');
+    }
 
-    // Handle user clicks on pre-defined messages
-    chatbotMessages.addEventListener('click', (event) => {
-      if (event.target.classList.contains('chatbot-message')) {
-        const response = event.target.getAttribute('data-response');
-        const botMessage = document.createElement('div');
-        botMessage.classList.add('chatbot-message', 'bot');
-        botMessage.textContent = response;
-        chatbotMessages.appendChild(botMessage);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-      }
-    });
+    $(document).ready(function() {
+        showMessages();
+        $('#chatForm').submit(function(e) {
+            e.preventDefault();
+            const content = $('#messageInput').val();
+            if (!content) return;
 
-    // Handle user input and bot response
-    chatbotInput.addEventListener('keyup', (event) => {
-      if (event.key === 'Enter') {
-        const userMessage = document.createElement('div');
-        userMessage.classList.add('chatbot-message', 'user');
-        userMessage.textContent = chatbotInput.value;
-        chatbotMessages.appendChild(userMessage);
-        chatbotInput.value = '';
+            $.post('ChatUse/send_message.php', { receiver_id: <?php echo $admin_id; ?>, content: content }, function(response) {
+                if (response.success) {
+                    $('#messageInput').val('');
+                    showMessages();
+                }
+            }, 'json');
+        });
 
-        // Simulate a response from the bot
-        setTimeout(() => {
-          const botMessage = document.createElement('div');
-          botMessage.classList.add('chatbot-message', 'bot');
-          botMessage.textContent = 'Thank you for your message. I will do my best to assist you.';
-          chatbotMessages.appendChild(botMessage);
-          chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-        }, 1000);
-      }
+        setInterval(showMessages, 3000); // Update messages every 3 seconds
     });
-  </script>
+    <?php endif; ?>
+</script>
+
 </body>
 </html>

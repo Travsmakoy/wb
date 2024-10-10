@@ -1,6 +1,7 @@
+
 <?php
 // customer_chat_widget.php
-session_start();
+// session_start();
 require_once 'conf/config.php';
 
 $isLoggedIn = isset($_SESSION['user_id']) && !$_SESSION['is_admin'];
@@ -9,19 +10,30 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 ?>
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Chat Widget</title>
+    <title>E-Commerce Customer Support</title>
     <style>
-        /* Widget Icon */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f3f4f6;
+            --text-color: #333;
+            --border-color: #e1e4e8;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         .chat-widget-icon {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #464775;
+            background-color: var(--primary-color);
             color: white;
             width: 60px;
             height: 60px;
@@ -31,167 +43,216 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             align-items: center;
             cursor: pointer;
             font-size: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
-        /* Chat Widget */
+        .chat-widget-icon:hover {
+            transform: scale(1.1);
+        }
+
         .chat-widget {
             position: fixed;
-            bottom: 80px;
+            bottom: 90px;
             right: 20px;
-            width: 300px;
-            max-height: 400px;
+            width: 350px;
+            height: 500px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: none;
             flex-direction: column;
             background-color: white;
-            border: 1px solid #e1dfdd;
+            border: 1px solid var(--border-color);
         }
 
-        /* Chat Header */
         .chat-widget-header {
-            background-color: #464775;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
+            font-weight: bold;
         }
 
-        /* Chat Messages */
         .chat-messages {
             flex-grow: 1;
-            padding: 10px;
+            padding: 15px;
             overflow-y: auto;
+            background-color: var(--secondary-color);
         }
 
-        /* Message Styles */
         .message {
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
             max-width: 80%;
-            background-color: #464775;
+            line-height: 1.4;
+            position: relative;
         }
 
         .message.received {
-            background-color: #f3f2f1;
+            /* background-color: white; */
             align-self: flex-start;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            background-color: #635b6b
         }
 
         .message.sent {
-            background-color: #e1dfdd;
+            background-color: var(--primary-color);
+            color: white;
             align-self: flex-end;
             margin-left: auto;
         }
 
-        /* Chat Input */
         .chat-input {
             display: flex;
-            padding: 10px;
-            background-color: #464775;
-            border-top: 1px solid #e1dfdd;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid var(--border-color);
         }
 
         .chat-input input {
             flex-grow: 1;
-            padding: 8px;
-            border: 1px solid #e1dfdd;
-            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 14px;
         }
 
         .chat-input button {
             margin-left: 10px;
-            padding: 8px;
-            background-color: #464775;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background-color: #3a7bc8;
         }
     </style>
 </head>
 <body>
 
-<!-- Chat Widget Icon -->
 <div class="chat-widget-icon" id="chatWidgetIcon">💬</div>
 
-<!-- Chat Widget -->
 <div class="chat-widget" id="chatWidget">
     <div class="chat-widget-header">
-        <h3>Chat</h3>
+        <h3>E-Commerce Support</h3>
     </div>
-    <div class="chat-messages" id="chatMessages">
-        <?php if ($isLoggedIn): ?>
-            <!-- Logged-in user chat -->
-            <div id="chatContent"></div>
-        <?php else: ?>
-            <!-- Static bot messages for guest users -->
-            <div class="message received">
-                <p>Hi, I’m a support bot! How can I help you today?</p>
-            </div>
-            <div class="message received">
-                <p>Please <a href="login.php">login</a> to chat with an admin.</p>
-            </div>
-        <?php endif; ?>
-    </div>
-    <?php if ($isLoggedIn): ?>
-    <!-- Input form only for logged-in users -->
+    <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input">
-        <form id="chatForm">
-            <input type="text" id="messageInput" placeholder="Type a message..." required>
-            <button type="submit">Send</button>
-        </form>
+        <input type="text" id="messageInput" placeholder="Type a message..." required>
+        <button id="sendButton">Send</button>
     </div>
-    <?php endif; ?>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // Toggle chat widget
     const chatWidgetIcon = document.getElementById('chatWidgetIcon');
     const chatWidget = document.getElementById('chatWidget');
+    const chatMessages = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+
+    const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+    let currentQuestion = 0;
+    const ecommerceQuestions = [
+        { question: "Welcome to our e-commerce support! How can I assist you today?", options: ["Track my order", "Return policy", "Product information", "Payment issues"] },
+        { question: "Please select a category:", options: ["Electronics", "Clothing", "Home & Garden", "Books"] },
+        { question: "What specific information do you need?", options: ["Price", "Availability", "Shipping", "Reviews"] }
+    ];
 
     chatWidgetIcon.addEventListener('click', () => {
         chatWidget.style.display = chatWidget.style.display === 'none' ? 'flex' : 'none';
+        if (chatWidget.style.display === 'flex' && chatMessages.children.length === 0) {
+            if (!isLoggedIn) {
+                showNextQuestion();
+            } else {
+                showMessages();
+            }
+        }
     });
 
-    <?php if ($isLoggedIn): ?>
-    // Fetch and show messages for logged-in users
-    function showMessages() {
-        $.get('ChatUse/get_messages.php', { other_user_id: <?php echo $admin_id; ?> }, function(messages) {
-            const chatMessages = $('#chatContent');
-            chatMessages.empty();
-            messages.forEach(message => {
-                const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
-                chatMessages.append(`
-                    <div class="message ${messageClass}">
-                        <p>${message.content}</p>
-                        <small>${message.timestamp}</small>
-                    </div>
-                `);
-            });
-            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
-        }, 'json');
+    function addMessage(content, isReceived = true) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', isReceived ? 'received' : 'sent');
+        messageDiv.textContent = content;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    $(document).ready(function() {
-        showMessages();
-        $('#chatForm').submit(function(e) {
-            e.preventDefault();
-            const content = $('#messageInput').val();
-            if (!content) return;
+    function showNextQuestion() {
+        if (currentQuestion < ecommerceQuestions.length) {
+            const question = ecommerceQuestions[currentQuestion];
+            addMessage(question.question);
+            setTimeout(() => {
+                question.options.forEach(option => {
+                    addMessage(option);
+                });
+            }, 500);
+        } else {
+            addMessage("Thank you for your inquiries. For more detailed assistance, please log in or create an account.");
+        }
+    }
 
+    function handleUserInput(input) {
+        if (!isLoggedIn) {
+            addMessage(input, false);
+            currentQuestion++;
+            setTimeout(showNextQuestion, 1000);
+        } else {
+            sendMessage(input);
+        }
+    }
+
+    sendButton.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            handleUserInput(message);
+            messageInput.value = '';
+        }
+    });
+
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+
+    if (isLoggedIn) {
+        function showMessages() {
+            $.getJSON('ChatUse/get_messages.php', { other_user_id: <?php echo $admin_id; ?> }, function(messages) {
+                $('#chatMessages').empty();
+                messages.forEach(message => {
+                    const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
+                    $('#chatMessages').append(`
+                        <div class="message ${messageClass}">
+                            <p>${message.content}</p>
+                            <small>${message.timestamp}</small>
+                        </div>
+                    `);
+                });
+                $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
+            });
+        }
+
+        function sendMessage(content) {
             $.post('ChatUse/send_message.php', { receiver_id: <?php echo $admin_id; ?>, content: content }, function(response) {
                 if (response.success) {
-                    $('#messageInput').val('');
                     showMessages();
                 }
             }, 'json');
-        });
+        }
 
-        setInterval(showMessages, 3000); // Update messages every 3 seconds
-    });
-    <?php endif; ?>
+        $(document).ready(function() {
+            showMessages();
+            setInterval(showMessages, 3000);
+        });
+    }
 </script>
 
 </body>
