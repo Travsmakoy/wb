@@ -217,7 +217,7 @@
             <div class="products">
                 <?php
                 $stmt = $conn->prepare("SELECT product_name, description, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ?");
-                $category_id = 1; // Assuming 1 is for 'Vapes'
+                $category_id = 2; // Assuming 1 is for 'Vapes'
                 $stmt->bind_param("i", $category_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -238,7 +238,7 @@
             <p>Explore our delicious selection of vape juices.</p>
             <div class="products">
                 <?php
-                $category_id = 2; // Assuming 2 is for 'Juice'
+                $category_id = 1; // Assuming 2 is for 'Juice'
                 $stmt->bind_param("i", $category_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -284,7 +284,7 @@
             <h3 class="popup-title" id="popupTitle"></h3>
             <p class="popup-description" id="popupDescription"></p>
             <p class="popup-price" id="popupPrice"></p>
-            <a href="#" class="add-to-cart">Add to Cart</a>
+            <a href="#" class="add-to-cart">Inquire via Chat</a>
         </div>
     </div>
 
