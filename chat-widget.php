@@ -137,11 +137,14 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 </head>
 <body>
 
-<div class="chat-widget-icon" id="chatWidgetIcon">💬</div>
+<div class="chat-widget-icon" id="chatWidgetIcon">
+    <img src="assets/mist-logo-withoutname.png" alt="Chat Icon" style="width: 60px; height: 60px;">
+</div>
+
 
 <div class="chat-widget" id="chatWidget">
     <div class="chat-widget-header">
-        <h3>E-Commerce Support</h3>
+        <h3>Live Support</h3>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input">
