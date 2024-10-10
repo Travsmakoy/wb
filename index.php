@@ -294,7 +294,7 @@
             document.getElementById('popupImage').src = image;
             document.getElementById('popupTitle').textContent = title;
             document.getElementById('popupDescription').textContent = description;
-            document.getElementById('popupPrice').textContent = '$' + price;
+            document.getElementById('popupPrice').textContent = '₱' + price;
             document.getElementById('productPopup').style.display = 'block';
         }
 
