@@ -151,4 +151,5 @@ $productsJson = json_encode($products);
         }
     </script>
 </body>
+<?php include 'chat-widget.php'; ?>
 </html>

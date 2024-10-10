@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $home_address = $_POST['home_address'];
-    $region = $_POST['region_text']; // Use text field instead of the select value
-    $province = $_POST['province_text']; // Use text field instead of the select value
-    $city = $_POST['city_text']; // Use text field instead of the select value
-    $barangay = $_POST['barangay_text']; // Use text field instead of the select value
-    
+    $region = $_POST['region_text'];
+    $province = $_POST['province_text'];
+    $city = $_POST['city_text'];
+    $barangay = $_POST['barangay_text'];
+
     // Age validation
     $dob = new DateTime($birthday);
     $today = new DateTime();
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Handle file upload
                 $target_dir = "su/cstmr-id/";
                 if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+                    mkdir($target_dir, 0777, true);
                 }
                 $target_file = $target_dir . uniqid() . '-' . basename($_FILES["identification"]["name"]);
 
@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+    <!--Finalized-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,44 +82,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Register</title>
 </head>
 <body>
-    
-    <h2>Register</h2>
-    <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
-    <form method="post" enctype="multipart/form-data">
-        <label>First Name:</label><input type="text" name="first_name" required><br>
-        <label>Last Name:</label><input type="text" name="last_name" required><br>
-        <label>Birthday:</label><input type="date" name="birthday" required><br>
-        <label>Identification Upload (Valid ID):</label><input type="file" name="identification" required><br>
-        <label>Email Address:</label><input type="email" name="email" required><br>
-        <label>Contact Number:</label><input type="text" name="contact_number" required><br>
-        <label>Password:</label><input type="password" name="password" required><br>
-        <label>Confirm Password:</label><input type="password" name="confirm_password" required><br>
-        <h3>Address Details</h3>
-        <label>Unit Number / House Number:</label><input type="text" name="home_address" required>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Region *</label>
-            <select name="region" class="form-control form-control-md" id="region"></select>
-            <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text" required>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Province *</label>
-            <select name="province" class="form-control form-control-md" id="province"></select>
-            <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">City *</label>
-            <select name="city" class="form-control form-control-md" id="city"></select>
-            <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <label class="form-label">Barangay *</label>
-            <select name="barangay" class="form-control form-control-md" id="barangay"></select>
-            <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-        </div>
 
-        <button type="submit">Register</button>
-    </form>
-    <a href="login.php">Already have an account? Login</a>
+    <div class="container">
+        <div class="form-container mt-5">
+            <div class="form-content">
+                <img src="assets/mist-logo-withoutname.png" alt="Image" class="img-fluid">
+                <div class="form-fields">
+                    <h2 class="text-center">REGISTER</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="first_name" placeholder="First Name" id="first_name" required>
+                        <input type="text" name="last_name" placeholder="Last Name" id="last_name" required>
+                        <input type="date" name="birthday" id="birthday" required>
+                        <input type="email" name="email" placeholder="Email" id="email" required>
+                        <input type="tel" name="contact_number" placeholder="Contact Number" id="contact_number" required>
+                        <input type="password" name="password" placeholder="Password" id="password" required>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" id="confirm_password" required>
+                        <button type="button" onclick="nextPage()">Next</button>
+                    </form>
+                    <div class="bottom mt-3" id="footer">
+                        <p>Already have an account?</p>
+                        <a href="./login.html" class="text-white">Log-In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<script src="ph-address-selector.js"></script>
+<script src="./script.js">
+   
+
+</script>
 </html>
