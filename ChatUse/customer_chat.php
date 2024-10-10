@@ -1,17 +1,19 @@
 <?php
 // customer_chat.php
 session_start();
-require_once 'config.php';
+require_once '../conf/config.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['is_admin']) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
+
 
 $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc()['id'];
 ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

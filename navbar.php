@@ -22,7 +22,9 @@ $is_logged_in = isset($_SESSION['user_id']);
             <ul class="nav-menu">
                 <li><a href="index.php" class="nav-link">HOME</a></li>
                 <li><a href="#" class="nav-link">PAGES</a></li>
+                <li><a href="ChatUse/customer_chat.php" class="nav-link">CHAT</a></li>
                 <li><a href="#" class="nav-link">CATALOG</a></li>
+                
                 <li>
                     <?php if ($is_logged_in): ?>
                         <a href="logout.php" class="btn btn-login">LOGOUT</a>

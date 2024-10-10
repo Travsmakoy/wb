@@ -1,7 +1,7 @@
 <?php
 // send_message.php
 session_start();
-require_once 'config.php';
+require_once '../conf/config.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_POST['receiver_id']) || !isset($_POST['content'])) {
     exit('Unauthorized');

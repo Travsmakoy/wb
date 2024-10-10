@@ -1,10 +1,10 @@
 <?php
 // admin_chat.php
 session_start();
-require_once 'config.php';
+require_once '../conf/config.php';
 
 if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 ?>
@@ -251,7 +251,7 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
         if (currentChatId) {
             showMessages(currentChatId);
         }
-    }, 3000);
+    }, 4000);
 });
     </script>
 </body>
