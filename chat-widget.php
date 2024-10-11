@@ -1,4 +1,3 @@
-
 <?php
 // customer_chat_widget.php
 // session_start();
@@ -6,7 +5,6 @@ require_once 'conf/config.php';
 
 $isLoggedIn = isset($_SESSION['user_id']) && !$_SESSION['is_admin'];
 $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc()['id'];
-
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +43,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             font-size: 24px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            z-index: 1000;
         }
 
         .chat-widget-icon:hover {
@@ -64,6 +63,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             flex-direction: column;
             background-color: white;
             border: 1px solid var(--border-color);
+            z-index: 999;
         }
 
         .chat-widget-header {
@@ -91,10 +91,10 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
         }
 
         .message.received {
-            /* background-color: white; */
             align-self: flex-start;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            background-color: #635b6b
+            background-color: #635b6b;
+            color: white;
         }
 
         .message.sent {
@@ -141,7 +141,6 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
     <img src="assets/mist-logo-withoutname.png" alt="Chat Icon" style="width: 60px; height: 60px;">
 </div>
 
-
 <div class="chat-widget" id="chatWidget">
     <div class="chat-widget-header">
         <h3>Live Support</h3>
@@ -155,6 +154,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', () => {
     const chatWidgetIcon = document.getElementById('chatWidgetIcon');
     const chatWidget = document.getElementById('chatWidget');
     const chatMessages = document.getElementById('chatMessages');
@@ -162,6 +162,9 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
     const sendButton = document.getElementById('sendButton');
 
     const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+    const adminId = <?php echo $admin_id; ?>;
+    const userId = <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null'; ?>;
+
     let currentQuestion = 0;
     const ecommerceQuestions = [
         { question: "Welcome to our e-commerce support! How can I assist you today?", options: ["Track my order", "Return policy", "Product information", "Payment issues"] },
@@ -169,7 +172,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
         { question: "What specific information do you need?", options: ["Price", "Availability", "Shipping", "Reviews"] }
     ];
 
-    chatWidgetIcon.addEventListener('click', () => {
+    function toggleChatWidget() {
         chatWidget.style.display = chatWidget.style.display === 'none' ? 'flex' : 'none';
         if (chatWidget.style.display === 'flex' && chatMessages.children.length === 0) {
             if (!isLoggedIn) {
@@ -178,7 +181,9 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
                 showMessages();
             }
         }
-    });
+    }
+
+    chatWidgetIcon.addEventListener('click', toggleChatWidget);
 
     function addMessage(content, isReceived = true) {
         const messageDiv = document.createElement('div');
@@ -212,26 +217,28 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
         }
     }
 
-    sendButton.addEventListener('click', () => {
+    function sendMessageHandler() {
         const message = messageInput.value.trim();
         if (message) {
             handleUserInput(message);
             messageInput.value = '';
         }
-    });
+    }
+
+    sendButton.addEventListener('click', sendMessageHandler);
 
     messageInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            sendButton.click();
+            sendMessageHandler();
         }
     });
 
     if (isLoggedIn) {
         function showMessages() {
-            $.getJSON('ChatUse/get_messages.php', { other_user_id: <?php echo $admin_id; ?> }, function(messages) {
+            $.getJSON('ChatUse/get_messages.php', { other_user_id: adminId }, function(messages) {
                 $('#chatMessages').empty();
                 messages.forEach(message => {
-                    const messageClass = message.sender_id == <?php echo $_SESSION['user_id']; ?> ? "sent" : "received";
+                    const messageClass = message.sender_id == userId ? "sent" : "received";
                     $('#chatMessages').append(`
                         <div class="message ${messageClass}">
                             <p>${message.content}</p>
@@ -240,22 +247,25 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
                     `);
                 });
                 $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching messages:", textStatus, errorThrown);
             });
         }
 
         function sendMessage(content) {
-            $.post('ChatUse/send_message.php', { receiver_id: <?php echo $admin_id; ?>, content: content }, function(response) {
+            $.post('ChatUse/send_message.php', { receiver_id: adminId, content: content }, function(response) {
                 if (response.success) {
                     showMessages();
                 }
-            }, 'json');
+            }, 'json').fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error sending message:", textStatus, errorThrown);
+            });
         }
 
-        $(document).ready(function() {
-            showMessages();
-            setInterval(showMessages, 3000);
-        });
+        showMessages();
+        setInterval(showMessages, 3000);
     }
+});
 </script>
 
 </body>
