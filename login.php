@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="main-content">
         <div class="container">
             <img src="assets/mist-logo-withoutname.png" alt="Vape Shop Logo" class="logo">
-            <h1>Welcome Back</h1>
+            <!-- <h1>Welcome Back</h1> -->
             <?php if (!empty($error)): ?>
                 <div class="message error"><?php echo $error; ?></div>
             <?php endif; ?>
