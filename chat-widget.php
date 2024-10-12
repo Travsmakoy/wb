@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuestion = 0;
     const ecommerceQuestions = [
-        { question: "Welcome to Innocuous Mist! How can I assist you today?", options: ["Return policy", "How to Order",] },
+        { question: "Welcome to Innocuous Mist ChatBot! How can I assist you today?", options: ["Return policy", "How to Order","Log-in to chat with Admin"] },
         { question: "Please select a category:", options: ["Vapes", "Juice", "Disposables", "Accessories"] },
         { question: "What specific information do you need?", options: ["Price", "Availability", "Shipping", "Reviews"] }
     ];
