@@ -333,5 +333,5 @@ if (!empty($request)) {
         }
     </script>
 </body>
-<?php include 'chat-widget.php'; ?>
+<?php include 'conf/foot.php'; ?>
 </html>

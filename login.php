@@ -182,4 +182,5 @@ if (!empty($request)) {
         });
     </script>
 </body>
+<?php include 'conf/foot.php'; ?>
 </html>
