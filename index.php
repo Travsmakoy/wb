@@ -39,8 +39,8 @@ if (!empty($request)) {
     <title>Innocuous Mist - Home</title>
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="./styles/output.css">
-
     <link rel="stylesheet" href="styles/home.css">
+    <link rel="shortcut icon" href="./assets/Favicon_Retro.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>

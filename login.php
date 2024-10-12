@@ -37,165 +37,146 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - VapeShop</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Innocous Mist | Login</title>
+    <link rel="stylesheet" href="./styles/output.css">
+    <link rel="stylesheet" href="./styles/home.css">
+    <link rel="shortcut icon" href="./assets/Favicon_Retro.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        /* Your existing CSS styles */
         body {
+            background-color: #1A1D3B;
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a1b26, #24273a);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
-        .nav-placeholder {
-            /* Adjust as needed */
-            background-color: rgba(36, 39, 58, 0.8);
-            padding: 1rem;
-        }
-        .main-content {
-            flex: 1;
+
+        #loginPopup {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .login-container {
+            background-color: #2A2D4B;
+            border-radius: 10px;
             padding: 2rem;
-        }
-        .footer-placeholder {
-            /* Adjust as needed */
-            background-color: rgba(36, 39, 58, 0.8);
-            padding: 1rem;
-            text-align: center;
-        }
-        .container {
-            background-color: rgba(36, 39, 58, 0.8);
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
             max-width: 400px;
-            backdrop-filter: blur(10px);
         }
-        h1 {
+
+        .login-container h1 {
             text-align: center;
-            color: #8be9fd;
-            margin-bottom: 2rem;
-            font-weight: 600;
-        }
-        .logo {
-            display: block;
-            margin: 0 auto 2rem;
-            width: 120px;
-            height: 120px;
-            transition: transform 0.3s ease;
-        }
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        .input-group {
-            position: relative;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, rgba(51, 252, 255, 1) 30%, rgba(255, 0, 138, 1) 71%, rgba(255, 80, 176, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        input {
+
+        .input-field {
+            margin-bottom: 1.5rem;
             width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 8px;
-            background-color: #1f2b46;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #33FCFF;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #33FCFF;
+            border-radius: 5px;
+            background-color: #1A1D3B;
             color: #ffffff;
-            font-size: 1rem;
-            transition: box-shadow 0.3s ease;
         }
-        input:focus {
+
+        .input-field input:focus {
             outline: none;
-            box-shadow: 0 0 0 2px #0fadf2;
+            border-color: #FF1695;
         }
-        input::placeholder {
-            color: #a0a0a0;
-        }
-        button {
-            background: linear-gradient(to right, #0fadf2, #ff00ff);
+
+        .submit-button {
+            background: linear-gradient(to bottom, #FF1695, #008F99);
             color: white;
+            padding: 10px;
             border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
+            width: 100%;
             font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(15, 173, 242, 0.4);
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #a0a0a0;
-        }
-        .register-link a {
-            color: #0fadf2;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        .register-link a:hover {
-            color: #ff00ff;
-        }
-        .message {
+
+        .error-message {
+            color: red;
             text-align: center;
             margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 4px;
         }
-        .error {
-            background-color: rgba(255, 0, 0, 0.1);
-            color: #ff6b6b;
-        }
-        .success {
-            background-color: rgba(0, 255, 0, 0.1);
-            color: #51cf66;
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #FF1695;
         }
     </style>
 </head>
-<body>
-    <div class="nav-placeholder">
-        <?php include './navbar.php'; ?>
-    </div>
 
-    <div class="main-content">
-        <div class="container">
-            <img src="assets/mist-logo-withoutname.png" alt="Vape Shop Logo" class="logo">
-            <!-- <h1>Welcome Back</h1> -->
-            <?php if (!empty($error)): ?>
-                <div class="message error"><?php echo $error; ?></div>
-            <?php endif; ?>
-            <?php if (!empty($success)): ?>
-                <div class="message success"><?php echo $success; ?></div>
-            <?php endif; ?>
-            <form id="loginForm" method="post" action="login.php">
-                <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
+<body>
+    <!-- NAVIGATION -->
+
+    <div id="loginPopup">
+        <div class="login-container">
+            <div class="flex items-center justify-center mb-4">
+                <img src="assets/mist-logo-withoutname.png" alt="Logo" style="max-width: 100px;">
+            </div>
+            <h1 class="retro_clouds_h1 uppercase font-bold text-2xl text-center">LOG IN</h1>
+
+            <div class="error-message">
+                <!-- <span><?php echo $systemMessage; ?></span> -->
+                <ul>
+                    <?php
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($errors)) :
+                        foreach ($errors as $error) :
+                    ?>
+                            <li><?php echo $error; ?></li>
+                    <?php
+                        endforeach;
+                    endif;
+                    ?>
+                </ul>
+            </div>
+
+            <form method="post" id="loginForm">
+                <div class="input-field">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>" required>
                 </div>
-                <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" required>
+
+                <div class="input-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit">Login</button>
+
+                <button type="submit" name="loginBtn" class="submit-button">LOGIN</button>
+
+                <div class="register-link">
+                    <p>Don't have an account? <a href="Register-Page.php" style="color: #33FCFF;">Register</a></p>
+                </div>
             </form>
-            <p class="register-link">Don't have an account? <a href="register">Register</a></p>
         </div>
     </div>
 
-    <div class="footer-placeholder">
-        <?php include 'conf/foot.php'; ?>
-    </div>
-
+    <script src="https://kit.fontawesome.com/d870978cd1.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('loginForm');
