@@ -12,13 +12,12 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/index.css">
+    <!-- <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/home.css">
     <link rel="shortcut icon" href="./assets/Favicon_Inno.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <title>E-Commerce Customer Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> -->
     <style>
         :root {
             --primary-color: #4a90e2;
