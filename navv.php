@@ -54,7 +54,7 @@ $isLoggedIn = !empty($_SESSION['customer_ID']);
                         <?= renderNavItem('catalog.php', 'Catalog'); ?>
                         <?php if (!$isLoggedIn): ?>
                             <li id='loginDisplay' class='flex items-center justify-center'>
-                                <a href='login.php' class='poppins flex items-center justify-center gap-2 py-2 px-6 border-2 border-[#33FCFF] bg-[#FF1695] rounded-full text-base font-bold uppercase text-white hover:text-[#33FCFF] md:py-1 md:px-4 md:text-base xl:text-base'><i class='fa-regular fa-circle-user text-lg laptopxxl:text-xl'></i> Login</a>
+                                <a href='.php' class='poppins flex items-center justify-center gap-2 py-2 px-6 border-2 border-[#33FCFF] bg-[#FF1695] rounded-full text-base font-bold uppercase text-white hover:text-[#33FCFF] md:py-1 md:px-4 md:text-base xl:text-base'><i class='fa-regular fa-circle-user text-lg laptopxxl:text-xl'></i> Login</a>
                             </li>
                         <?php else: ?>
                             <li id='logoutDisplay' class='flex items-center justify-center'>

@@ -40,22 +40,95 @@ if (!empty($request)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innocuous Mist - Home</title>
+    <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="./styles/output.css">
+    <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/home.css">
     <link rel="shortcut icon" href="./assets/Favicon_Inno.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- STYLE FOR SLIDER -->
+    <style>
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .slider {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        transition: transform 1s ease;
+    }
+
+    .slide {
+        min-width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .slide.active {
+        display: flex;
+    }
+
+    .hero-content {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .cta-button {
+        background-color: #ff7f50;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .cta-button:hover {
+        background-color: #e06943;
+    }
+</style>
 </head>
 <body>
     <main>
-        <section class="hero">
+    <section class="hero">
+    <div class="slider">
+        <div class="slide active" style="background-image: url('assets/slider1.png');">
             <div class="hero-content">
                 <h1>Welcome to Innocuous Mist</h1>
                 <p>Experience the future of vaping with our cutting-edge products and flavors.</p>
                 <a href="catalog.php" class="cta-button">Explore Our Catalog</a>
             </div>
-        </section>
+        </div>
+        <div class="slide" style="background-image: url('assets/slider2.jpg');">
+            <div class="hero-content">
+                <h1>Discover Our New Arrivals</h1>
+                <p>Fresh flavors and the latest vape devices available now.</p>
+                <a href="catalog.php" class="cta-button">Shop Now</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('assets/slider3.jpg');">
+            <div class="hero-content">
+                <h1>Quality Vaping Products</h1>
+                <p>Premium products for an exceptional vaping experience.</p>
+                <a href="catalog.php" class="cta-button">Browse Our Products</a>
+            </div>
+        </div>
+    </div>
+</section>
         <div class="relative p-4 w-full h-[20vh] bg-gradient-to-l from-[#1F9799] via-[#33FCFF] to-[#1F9799] flex items-center justify-center mobilemd:px-6 sm:px-8 md:h-auto md:px-10 lg:px-12 xl:px-14 xl:py-6 laptopxxl:px-16 2xl:px-20">
         <div class="w-full h-auto flex flex-col items-center justify-center">
             <p class="text-[#610049] text-center font-semibold bebas-neue mobilelg:text-xl lg:text-2xl">Government warning: This product is harmful and contains nicotine which is a highly addictive substance. This is for use only by adults and is not recommended for use by non-smokers.</p>
@@ -203,6 +276,29 @@ if (!empty($request)) {
             <a href="#" class="add-to-cart">Inquire via Chat</a>
         </div>
     </div>
+
+    <!-- SCRIPT FOR SLIDER -->
+    <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Automatically change slides every 5 seconds
+    setInterval(nextSlide, 5000);
+</script>
     <script>
         // JavaScript for handling the pop-up
         function openPopup(image, title, description, price) {
