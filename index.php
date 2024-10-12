@@ -82,7 +82,7 @@ if (!empty($request)) {
 
     .hero-content {
         color: #fff;
-        background: rgba(0, 0, 0, 0.5);
+        /* background: rgba(0, 0, 0, 0.5); */
         padding: 20px;
         border-radius: 8px;
     }
@@ -106,7 +106,7 @@ if (!empty($request)) {
     <main>
     <section class="hero">
     <div class="slider">
-        <div class="slide active" style="background-image: url('assets/slider1.png');">
+        <div class="slide active" style="background-image: url('assets/slider1.jpg');">
             <div class="hero-content">
                 <h1>Welcome to Innocuous Mist</h1>
                 <p>Experience the future of vaping with our cutting-edge products and flavors.</p>
@@ -125,7 +125,7 @@ if (!empty($request)) {
                 <h1>Quality Vaping Products</h1>
                 <p>Premium products for an exceptional vaping experience.</p>
                 <a href="catalog.php" class="cta-button">Browse Our Products</a>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </section>
