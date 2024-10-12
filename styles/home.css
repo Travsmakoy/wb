@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    scroll-behavior: smooth !important;
+}
+
+/* .hero-banner-img{
+    background-image: url('../assets/hero-banner-image.jpg');
+    background-size: cover;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+}   */
+
+/* .retro_clouds_h1{
+    font-family: "Tourney", sans-serif;
+    background: linear-gradient(90deg, rgb(73, 125, 126) 30%, rgba(255,0,138,1) 71%, rgba(255,80,176,1) 100%);
+    background-clip: text;
+    color: transparent;
+} */
+
+.oswald{
+    font-family: "Oswald", sans-serif;
+}
+
+.poppins{
+    font-family: "Poppins" , sans-serif;
+}
+
+.bebas-neue {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.nav__open,
+.nav__close {
+    transition: opacity .1s, transform .4s;
+}
+
+.partners_bg {
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('../assets/img_divider_one.png') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+}
+
+
+.mixed-gradient-img{
+    background-image: linear-gradient(to bottom, #1a1d3b5c, #1a1d3b6f), url('../assets/mixed-gradient.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}   
+
+.blog-bg-one{
+    background-image: url('../assets/blog-bg-one.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+.blog-bg-two{
+    background-image: url('../assets/teenager-saying-no-friends-offering-electronic-cigarette.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+.blog-bg-three{
+    background-image: url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/04/Smoke-Male-Vape-1296x728-Header-1024x575.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+.blog-bg-four{
+    background-image: url('../assets/image-sample.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+.blog-bg-five{
+    background-image: url('https://news.umich.edu/wp-content/uploads/2018/04/vaping-s-potential-to-benefit-public-health-exceeds-its-risks-orig-20180412.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
