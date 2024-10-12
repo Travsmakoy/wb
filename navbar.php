@@ -48,18 +48,27 @@ if (!empty($request)) {
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index" class="nav-link">HOME</a></li>
-                <!-- <li><a href="ChatUse/customer_chat.php" class="nav-link">CHAT</a></li> -->
-                <li><a href="catalog" class="nav-link">CATALOG</a></li>
-                
-                <li>
-                    <?php if ($is_logged_in): ?>
-                        <a href="logout" class="btn btn-login">LOGOUT</a>
-                    <?php else: ?>
-                        <a href="login" class="btn btn-login">LOGIN</a>
-                    <?php endif; ?>
-                </li>
-            </ul>
+    <li><a href="index" class="nav-link">HOME</a></li>
+    <!-- <li><a href="ChatUse/customer_chat.php" class="nav-link">CHAT</a></li> -->
+    <li><a href="catalog" class="nav-link">CATALOG</a></li>
+    <li class="dropdown">
+        <a href="#" class="nav-link dropdown-toggle">OTHERS</a>
+        <ul class="dropdown-menu">
+            <li><a href="#" class="nav-link">FAQs</a></li>
+            <li><a href="#" class="nav-link">About Us</a></li>
+            <li><a href="#" class="nav-link">Others</a></li>
+        </ul>
+    </li>
+    
+    <li>
+        <?php if ($is_logged_in): ?>
+            <a href="logout" class="btn btn-login">LOGOUT</a>
+        <?php else: ?>
+            <a href="login" class="btn btn-login">LOGIN</a>
+        <?php endif; ?>
+    </li>
+</ul>
+
             <button class="hamburger" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
@@ -71,6 +80,41 @@ if (!empty($request)) {
 
 <style>
     /* Additional custom styles for the navbar */
+    /* Style for the dropdown */
+.nav-menu .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-menu .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-menu .dropdown-menu li {
+    padding: 12px 16px;
+}
+
+.nav-menu .dropdown-menu li a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-menu .dropdown-menu li a:hover {
+    background-color: #f1f1f1;
+}
+
+.nav-menu .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
     .navbar {
         display:  fixed;
         background-color: var(--primary-bg);
