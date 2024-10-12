@@ -143,7 +143,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 
 <div class="chat-widget" id="chatWidget">
     <div class="chat-widget-header">
-        <h3>Live Support</h3>
+        <h3>I.M Live Support</h3>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input">
@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuestion = 0;
     const ecommerceQuestions = [
-        { question: "Welcome to our e-commerce support! How can I assist you today?", options: ["Track my order", "Return policy", "Product information", "Payment issues"] },
-        { question: "Please select a category:", options: ["Electronics", "Clothing", "Home & Garden", "Books"] },
+        { question: "Welcome to Innocuous Mist! How can I assist you today?", options: ["Return policy", "How to Order",] },
+        { question: "Please select a category:", options: ["Vapes", "Juice", "Disposables", "Accessories"] },
         { question: "What specific information do you need?", options: ["Price", "Availability", "Shipping", "Reviews"] }
     ];
 

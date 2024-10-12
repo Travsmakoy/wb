@@ -8,27 +8,55 @@ require_once 'conf/config.php';
 // Check if the user is logged in
 $is_logged_in = isset($_SESSION['user_id']);
 ?>
+<?php
+// Start the session (optional)
+// session_start();
+
+// Get the requested URL
+$request = $_SERVER['REQUEST_URI'];
+
+// Remove any leading slashes
+$request = ltrim($request, '/');
+
+// Set the default file
+$file = 'index.php'; // Change this to your default home page
+
+// If the request is not empty, append .php
+if (!empty($request)) {
+    $file = $request . '.php';
+}
+
+// Check if the requested file exists
+// if (file_exists($file)) {
+//     include $file;
+// } else {
+//     // Handle 404 error
+//     header("HTTP/1.0 404 Not Found");
+//     echo "<h1>404 Not Found</h1>";
+//     echo "<p>The page you are looking for does not exist.</p>";
+// }
+?>
 
 <header>
     <link rel="stylesheet" href="styles/global.css">
     <nav class="navbar">
         <div class="navbar-container">
             <div class="logo">
-                <a href="index.php" style="display: flex; align-items: center; text-decoration: none;">
+                <a href="index" style="display: flex; align-items: center; text-decoration: none;">
                     <img src="assets/logo.png" alt="Innocuous Mist" class="navbar-logo">
                     <!-- <span class="navbar-brand">Innocuous Mist</span> -->
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.php" class="nav-link">HOME</a></li>
+                <li><a href="index" class="nav-link">HOME</a></li>
                 <!-- <li><a href="ChatUse/customer_chat.php" class="nav-link">CHAT</a></li> -->
-                <li><a href="catalog.php" class="nav-link">CATALOG</a></li>
+                <li><a href="catalog" class="nav-link">CATALOG</a></li>
                 
                 <li>
                     <?php if ($is_logged_in): ?>
-                        <a href="logout.php" class="btn btn-login">LOGOUT</a>
+                        <a href="logout" class="btn btn-login">LOGOUT</a>
                     <?php else: ?>
-                        <a href="login.php" class="btn btn-login">LOGIN</a>
+                        <a href="login" class="btn btn-login">LOGIN</a>
                     <?php endif; ?>
                 </li>
             </ul>
