@@ -81,6 +81,60 @@ if (!empty($request)) {
         </div>
     </div>
 
+    <!-- RELATED ARTICLES -->
+    <div class="lg:grid lg:grid-cols-2 lg:w-full lg:max-w-full lg:items-end lg:justify-between">
+        <div class="w-full max-w-full h-[60vh] bg-gradient-to-t from-[#FF1695] to-transparent flex flex-col items-center justify-center gap-3 px-4 mobilemd:px-6 sm:h-[70vh] sm:max-h-[70vh] sm:p-8 sm:gap-4 md:px-10 md:h-[80vh] md:max-h-[80vh] lg:p-12 xl:p-14 laptopxxl:p-16 2xl:px-20 2xl:py-8">
+            <div class="w-full h-[10vh] flex items-center justify-center">
+                <p class="text-[#33FCFF] text-2xl oswald uppercase mobilelg:font-bold sm:text-[2rem] 2xl:text-4xl 2xl:tracking-wider">related articles</p>
+            </div>
+            <a href="https://kidshealth.org/en/teens/e-cigarettes.html" target="_blank" class="w-full h-[60%] bg-[#1A1D3B] flex flex-col items-center justify-center blog-bg-one border border-[#1A1D3B]  border-x-2 border-y-8 rounded-md hover:border-[#FF1695] hover:border-2 iphone:justify-end sm:h-[80%] sm:max-h-[80%] md:h-full md:max-h-full lg:p-4">
+
+                <div class="w-full h-[50%] overflow-hidden flex items-center justify-center iphone:hidden lg:w-full">
+
+                </div>
+
+                <div class="flex flex-col w-[90%] items-start justify-center bg-[#1a1d3bd5] px-1 mobilelg:w-full mobilelg:p-2 sm:p-4">
+                    <p class="text-white oswald  text-xs sm:text-sm">January 2024</p>
+                    <h1 class="text-white text-lg sm:text-xl">Vaping: What You Need to Know</h1>
+                    <p class="text-white text-xs oswald sm:text-sm">Medically reviewed by: Elana Pearl Ben-Joseph, MD</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="w-full max-w-full h-[40vh] max-h-[40vh] bg-gradient-to-b from-[#FF1695] to-transparent flex flex-col items-center justify-start mobilelg:px-6 sm:h-[70vh] sm:max-h-[70vh] sm:p-8 sm:gap-4 md:px-10 md:h-[80vh] md:max-h-[80vh] lg:grid lg:col-span-1 lg:bg-gradient-to-t lg:from-[#FF1695] lg:to-transparent lg:justify-end lg:p-14 laptopxxl:p-16 2xl:pr-20 2xl:pl-0 2xl:py-8 2xl:justify-end">
+            <div class="w-full max-w-full h-[100%] flex flex-col px-4 mobilemd:px-6 mobilelg:gap-4 mobilelg:px-0 2xl:gap-12 2xl:flex-1 2xl:px-0 2xl:pl-0 2xl:w-[600px] 2xl:max-w-[600px]">
+                <div class="w-full max-w-full h-[50%] flex items-center justify-around iphone:justify-between iphone:gap-4 lg:h-full 2xl:flex-1">
+                    <a href="https://newsinhealth.nih.gov/2020/05/risks-vaping" target="_blank" class="w-[45%] h-[95%] bg-[#1A1D3B] border border-3 border-[#33FCFF] hover:border-[#FF1695] flex flex-col items-center justify-center blog-bg-two iphone:w-1/2 iphone:justify-end iphone:h-[130px] sm:h-full sm:max-h-full 2xl:w-full">
+                        <div class="bg-[#1a1d3bd5] w-[90%] mobilelg:w-full iphone:p-1 sm:p-2">
+                            <p class="text-white oswald text-xs px-1 sm:text-sm">May 2020</p>
+                            <h1 class="text-white text-sm px-1 sm:text-base">The Risks of Vaping</h1>
+                        </div>
+                    </a>
+                    <a href="https://www.medicalnewstoday.com/articles/vaping-vs-smoking" target="_blank" class="w-[45%] h-[95%] bg-[#1A1D3B] border border-3 border-[#33FCFF] hover:border-[#FF1695] flex flex-col items-center justify-center blog-bg-three iphone:w-1/2 iphone:justify-end iphone:h-[130px] sm:h-full sm:max-h-full 2xl:w-full">
+                        <div class="bg-[#1a1d3bd5] w-[90%] mobilelg:w-full iphone:p-1 sm:p-2">
+                            <p class="text-white oswald text-xs px-1 sm:text-sm">May 2024</p>
+                            <h1 class="text-white text-sm px-1 sm:text-base">Vaping vs. smoking: Which is safer?</h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="w-full max-w-full h-[50%] flex items-center justify-around iphone:justify-between iphone:gap-4 lg:h-full 2xl:flex-1">
+                    <a href="https://archpublichealth.biomedcentral.com/articles/10.1186/s13690-022-00998-w" target="_blank" class="w-[45%] h-[95%] bg-[#1A1D3B] border border-3 border-[#33FCFF] hover:border-[#FF1695] flex flex-col items-center justify-center blog-bg-four iphone:w-1/2 iphone:justify-end iphone:h-[130px] sm:h-full sm:max-h-full 2xl:w-full">
+                        <div class="bg-[#1a1d3bd5] w-[90%] mobilelg:w-full iphone:p-1 sm:p-2">
+                            <p class="text-white oswald text-xs px-1 sm:text-sm">November 2022</p>
+                            <h1 class="text-white text-sm px-1 sm:text-base">The prevalence of electronic cigarettes</h1>
+                        </div>
+                    </a>
+                    <a href="#" class="w-[45%] h-[95%] bg-[#1A1D3B] border border-3 border-[#33FCFF] hover:border-[#FF1695] flex flex-col items-center justify-center blog-bg-five iphone:w-1/2 iphone:justify-end iphone:h-[130px] sm:h-full sm:max-h-full 2xl:w-full">
+                        <div class="bg-[#1a1d3bd5] w-[90%] mobilelg:w-full iphone:p-1 sm:p-2">
+                            <p class="text-white oswald text-xs px-1 sm:text-sm">April 2018</p>
+                            <h1 class="text-white text-sm px-1 sm:text-base">Vaping’s potential to benefit public...</h1>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
         <section class="section" id="vapes">
             <h2>Vapes</h2>
