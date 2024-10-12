@@ -40,12 +40,9 @@ if (!empty($request)) {
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="./styles/output.css">
     <link rel="stylesheet" href="styles/home.css">
-    <link rel="shortcut icon" href="./assets/Favicon_Retro.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/Favicon_Inno.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-      
-    </style>
 </head>
 <body>
     <main>
@@ -61,7 +58,6 @@ if (!empty($request)) {
             <p class="text-[#610049] text-center font-semibold bebas-neue mobilelg:text-xl lg:text-2xl">Government warning: This product is harmful and contains nicotine which is a highly addictive substance. This is for use only by adults and is not recommended for use by non-smokers.</p>
         </div>
     </div>
-
     <!-- BRAND PARTNERS -->
     <div class="overflow-x-hidden partners_bg relative w-full h-auto p-4 flex flex-col justify-center items-center flex-wrap gap-4 mobilemd:p-6 mobilelg:gap-6 sm:max-h-[50vh] sm:h-[50vh] sm:p-8 sm:gap-8 md:px-10 lg:px-12 xl:px-14 xl:gap-14 xl:h-[60vh] xl:max-h-[60vh] laptopxxl:px-16 2xl:px-20">
         <div class="w-full flex items-center justify-around gap-2 flex-wrap">
@@ -80,7 +76,6 @@ if (!empty($request)) {
             <a href="https://www.facebook.com/SMPOPH" target="_blank" class="hover:scale-105"><img src="./assets/smpo-logo.png" class="w-[80px] h-auto mobilelg:w-[100px] sm:w-[120px] xl:w-[130px] 2xl:w-[160px]"></a>
         </div>
     </div>
-
     <!-- RELATED ARTICLES -->
     <div class="lg:grid lg:grid-cols-2 lg:w-full lg:max-w-full lg:items-end lg:justify-between">
         <div class="w-full max-w-full h-[60vh] bg-gradient-to-t from-[#FF1695] to-transparent flex flex-col items-center justify-center gap-3 px-4 mobilemd:px-6 sm:h-[70vh] sm:max-h-[70vh] sm:p-8 sm:gap-4 md:px-10 md:h-[80vh] md:max-h-[80vh] lg:p-12 xl:p-14 laptopxxl:p-16 2xl:px-20 2xl:py-8">
@@ -134,8 +129,6 @@ if (!empty($request)) {
             </div>
         </div>
     </div>
-
-
         <section class="section" id="vapes">
             <h2>Vapes</h2>
             <p>Discover our range of high-quality vapes for a superior experience.</p>
@@ -157,7 +150,6 @@ if (!empty($request)) {
                 ?>
             </div>
         </section>
-
         <section class="section" id="juice">
             <h2>Juice</h2>
             <p>Explore our delicious selection of vape juices.</p>
@@ -167,7 +159,6 @@ if (!empty($request)) {
                 $stmt->bind_param("i", $category_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
-
                 while ($row = $result->fetch_assoc()) {
                     echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
                             <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
@@ -178,7 +169,6 @@ if (!empty($request)) {
                 ?>
             </div>
         </section>
-
         <section class="section" id="disposables">
             <h2>Disposables</h2>
             <p>Check out our convenient disposable vapes.</p>
@@ -188,7 +178,6 @@ if (!empty($request)) {
                 $stmt->bind_param("i", $category_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
-
                 while ($row = $result->fetch_assoc()) {
                     echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
                             <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
@@ -200,7 +189,6 @@ if (!empty($request)) {
             </div>
         </section>
     </main>
-
     <!-- Pop-up structure -->
     <div class="popup-overlay" id="productPopup">
         <div class="popup-content">
@@ -212,7 +200,6 @@ if (!empty($request)) {
             <a href="#" class="add-to-cart">Inquire via Chat</a>
         </div>
     </div>
-
     <script>
         // JavaScript for handling the pop-up
         function openPopup(image, title, description, price) {
@@ -222,7 +209,6 @@ if (!empty($request)) {
             document.getElementById('popupPrice').textContent = '₱' + price;
             document.getElementById('productPopup').style.display = 'block';
         }
-
         function closePopup() {
             document.getElementById('productPopup').style.display = 'none';
         }
