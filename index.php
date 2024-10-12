@@ -1,4 +1,4 @@
-<?php include 'navbar.php'; ?>
+<?php include 'navbar.php'; // Include your database connection file ?>
 <?php require_once 'conf/config.php'; // Include your database connection file ?>
 <?php
 // Start the session (optional)
@@ -29,7 +29,10 @@ if (!empty($request)) {
 // }
 ?>
 
-
+<!-- <?php
+        define('SOURCE_PATH', './assets/mist-logo.png');
+        include("navv.php");
+    ?> -->
 
 <!DOCTYPE html>
 <html lang="en">

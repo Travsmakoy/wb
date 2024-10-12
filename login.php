@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+<?php include './navbar.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="loginBtn" class="submit-button">LOGIN</button>
 
                 <div class="register-link">
-                    <p>Don't have an account? <a href="Register-Page.php" style="color: #33FCFF;">Register</a></p>
+                    <p>Don't have an account? <a href="register" style="color: #33FCFF;">Register</a></p>
                 </div>
             </form>
         </div>
