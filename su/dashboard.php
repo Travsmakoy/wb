@@ -374,7 +374,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         }
 
         button {
-            background-color: var(--primary-color);
+            background-color: #2692c0;
             color: white;
             padding: 0.75rem 1rem;
             border: none;
@@ -385,12 +385,13 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         }
 
         button:hover {
-            background-color: #034a1e;
+            background-color: #094965;
             font-size: 19px; 
         }
 
         .table-responsive {
             overflow-x: auto;
+            
         }
 
         table {
@@ -408,8 +409,8 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
         }
 
         th {
-            background-color: var(--primary-color);
-            color: #fff;
+            background-color: #2692c0;
+            color: lightgray;
         }
 
         tr:hover {
@@ -465,7 +466,24 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
             max-width: 600px;
             border-radius: 10px;
         }
+        .modal-content{
+        background-color: lightblue;
+
+        }
+        .form-section{
+        background-color: lightblue;
+
+        }
+        #Deletebutton{
+        text-decoration: none;
+
+        }
+        #Deletebutton:hover{
         
+        background-color: #8d0606;
+        font-size: 17px;
+
+        }
     </style>
 </head>
 <body>
@@ -482,7 +500,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
     <main class="content">
         <header class="dashboard-header">
-            <h1 style = "color:gray">VapeShop - Admin Dashboard & Inventory</h1>
+            <h1 style = "color:lightgray">VapeShop - Admin Dashboard & Inventory</h1>
         </header>
 
         <?php if (!empty($message)): ?>
@@ -600,7 +618,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><?php echo htmlspecialchars($category['category_id']); ?></td>
                                 <td><?php echo htmlspecialchars($category['category_name']); ?></td>
                                 <td class="action-buttons">
-                                    <a href="?delete_category=<?php echo $category['category_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>
+                                    <a href="?delete_category=<?php echo $category['category_id']; ?>" class="btn btn-delete" id = "Deletebutton"  onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -655,7 +673,7 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><?php echo htmlspecialchars($brand['brand_name']); ?></td>
                                 <td><?php echo htmlspecialchars($brand['category_name']); ?></td>
                                 <td class="action-buttons">
-                                    <a href="?delete_brand=<?php echo $brand['brand_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
+                                    <a href="?delete_brand=<?php echo $brand['brand_id']; ?>"class="btn btn-delete" id = "Deletebutton"onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -725,7 +743,8 @@ $brands = $result->fetch_all(MYSQLI_ASSOC);
 
         <!-- Products Table -->
         <section id="products-table">
-            <h2 style = "color:gray">Products</h2>
+            <br>
+            <h2 style = "color:lightgray">Products</h2>
             <div class="table-responsive">
                 <table>
                     <thead>

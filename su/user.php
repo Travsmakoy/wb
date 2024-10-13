@@ -56,8 +56,11 @@ if ($result->num_rows > 0) {
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            background-color: #0e153e;
+            color: lightgray;
+        }
+        .form-content{
+           background-color: red;
         }
 
         .sidebar {
@@ -93,13 +96,21 @@ if ($result->num_rows > 0) {
             padding: 2rem;
             margin-left: var(--sidebar-width);
             transition: margin-left var(--transition-time);
+            padding-left: 4rem;
+            
         }
 
         .tabs {
             margin-top: 2rem;
             display: flex;
             border-bottom: 1px solid #ddd;
+           
         }
+        .tabs div{
+            background-color: #2f8bb9;
+           
+        }
+
 
         .tab {
             padding: 10px 20px;
@@ -111,7 +122,7 @@ if ($result->num_rows > 0) {
         }
 
         .tab.active {
-            background-color: var(--primary-color);
+            background-color: darkblue;
             color: white;
         }
 
@@ -130,6 +141,7 @@ if ($result->num_rows > 0) {
             width: 100%;
             border-collapse: collapse;
             margin-top: 2rem;
+            
         }
 
         .table th, .table td {
@@ -139,7 +151,7 @@ if ($result->num_rows > 0) {
         }
 
         .table th {
-            background-color: var(--primary-color);
+            background-color: #2f8bb9;
             color: white;
         }
 
