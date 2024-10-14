@@ -105,6 +105,8 @@ if (!empty($request)) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Kanit|Space+Grotesk">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <!-- <link rel="stylesheet" href="styles/output.css"> -->
+    <!-- <link rel="stylesheet" href="styles/home.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Register</title>
     <style>
@@ -173,7 +175,7 @@ if (!empty($request)) {
     </div>
     </div>
     </div>
-    <a href="login">Already have an account? Login</a>
+    <p class="text-[#33FCFF] text-sm font-bold text-center">Already have an account? <a href="login" class="text-[#33FCFF] underline">Log-in</a></>
   
     <script>
         function nextPage() {
