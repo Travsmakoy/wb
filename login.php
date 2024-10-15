@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_admin'] = $user['is_admin'];
             $success = "Login successful! Redirecting...";
-            header("Location: " . ($user['is_admin'] ? "su/dashboard.php" : "index.php"));
+            header("Location: " . ($user['is_admin'] ? "su/dashboard" : "index.php"));
             exit;
         } else {
             $error = "Invalid email or password!";
