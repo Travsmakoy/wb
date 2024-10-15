@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             left: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
+            z-index: 2; /* Set the z-index here */
         }
 
         .login-container {
@@ -71,6 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             width: 90%;
             max-width: 400px;
+            z-index: 3; /* Ensure it's on top */
+        }
+
+        /* Set z-index for navbar to ensure it is above the login */
+        #navbar {
+            position: relative;
+            z-index: 100; /* Set a higher z-index for the navbar */
         }
 
         .login-container h1 {
@@ -142,19 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h1 class="retro_clouds_h1 uppercase font-bold text-2xl text-center">LOG IN</h1>
 
+            <!-- Error and Success Messages -->
             <div class="error-message">
-                <!-- <span><?php echo $systemMessage; ?></span> -->
-                <ul>
-                    <?php
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($errors)) :
-                        foreach ($errors as $error) :
-                    ?>
-                            <li><?php echo $error; ?></li>
-                    <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </ul>
+                <?php if (!empty($error)) : ?>
+                    <p style="color: red;"><?php echo $error; ?></p>
+                <?php elseif (!empty($success)) : ?>
+                    <p style="color: green;"><?php echo $success; ?></p>
+                <?php endif; ?>
             </div>
 
             <form method="post" id="loginForm">
