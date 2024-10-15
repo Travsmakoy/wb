@@ -34,117 +34,236 @@ foreach ($categories as $category) {
 $categoriesJson = json_encode($categories);
 $productsJson = json_encode($products);
 ?>
-<?php
-// Start the session (optional)
-// session_start();
 
-// Get the requested URL
-$request = $_SERVER['REQUEST_URI'];
-
-// Remove any leading slashes
-$request = ltrim($request, '/');
-
-// Set the default file
-$file = 'index.php'; // Change this to your default home page
-
-// If the request is not empty, append .php
-if (!empty($request)) {
-    $file = $request . '.php';
-}
-
-// Check if the requested file exists
-// if (file_exists($file)) {
-//     include $file;
-// } else {
-//     // Handle 404 error
-//     header("HTTP/1.0 404 Not Found");
-//     echo "<h1>404 Not Found</h1>";
-//     echo "<p>The page you are looking for does not exist.</p>";
-// }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Vape Shop Catalog</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --accent-blue: #00ffff;
+            --accent-pink: #ff00ff;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px var(--accent-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category h2 {
+            font-size: 2rem;
+            color: var(--accent-pink);
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--secondary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: var(--accent-pink);
+            font-weight: bold;
+        }
+
+        .view-all-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: var(--accent-pink);
+            color: var(--text-light);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background-color: #ff33ff;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .popup-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .popup-title {
+            font-size: 24px;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .popup-description {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .popup-price {
+            font-size: 20px;
+            color: var(--accent-pink);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100" x-data="catalogApp()">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Vape Shop Catalog</h1>
+<body x-data="catalogApp()">
+    <div class="container">
+        <h1>Vape Shop Catalog</h1>
         
         <template x-for="category in categories" :key="category.category_id">
-            <div class="mb-12">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800" x-text="category.category_name"></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            <div class="category">
+                <h2 x-text="category.category_name"></h2>
+                <div class="product-grid">
                     <template x-for="product in products[category.category_id]" :key="product.product_id">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                            <img :src="product.img_dir" :alt="product.product_name" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg mb-2 text-gray-800" x-text="product.product_name"></h3>
-                                <p class="text-gray-700 text-base mb-3" x-text="'₱' + parseFloat(product.price).toFixed(2)"></p>
-                                <button @click="openProductModal(product)" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                                    View Details
-                                </button>
+                        <div class="product-card" @click="openProductModal(product)">
+                            <img :src="product.img_dir" :alt="product.product_name" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name" x-text="product.product_name"></h3>
+                                <p class="product-price" x-text="'₱' + parseFloat(product.price).toFixed(2)"></p>
                             </div>
                         </div>
                     </template>
                 </div>
-                <div class="mt-6 text-center">
-                    <button @click="loadAllProducts(category.category_id)" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
-                        View All <span x-text="category.category_name"></span>
-                    </button>
-                </div>
+                <a href="#" @click.prevent="loadAllProducts(category.category_id)" class="view-all-btn">
+                    View All <span x-text="category.category_name"></span>
+                </a>
             </div>
         </template>
     </div>
 
     <!-- Modal for single product -->
-    <div x-show="selectedProduct" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" x-cloak>
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full" @click.away="selectedProduct = null">
-            <div class="p-6">
-                <h2 class="text-3xl font-bold mb-4 text-gray-800" x-text="selectedProduct?.product_name"></h2>
-                <img :src="selectedProduct?.img_dir" :alt="selectedProduct?.product_name" class="w-full h-64 object-cover mb-6 rounded-lg">
-                <p class="text-2xl font-bold mb-4 text-gray-700" x-text="'₱' + parseFloat(selectedProduct?.price).toFixed(2)"></p>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <p><strong>Flavor:</strong> <span x-text="selectedProduct?.flavor || 'N/A'"></span></p>
-                    <p><strong>Color:</strong> <span x-text="selectedProduct?.color || 'N/A'"></span></p>
-                    <p><strong>Puffs:</strong> <span x-text="selectedProduct?.puffs || 'N/A'"></span></p>
-                </div>
-                <p class="mb-6"><strong>Description:</strong> <span x-text="selectedProduct?.description || 'No description available.'"></span></p>
-                <button @click="selectedProduct = null" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                    Close
-                </button>
+    <div x-show="selectedProduct" class="popup-overlay" x-cloak @click.self="selectedProduct = null">
+        <div class="popup-content">
+            <span class="close-popup" @click="selectedProduct = null">&times;</span>
+            <img :src="selectedProduct?.img_dir" :alt="selectedProduct?.product_name" class="popup-image">
+            <h2 class="popup-title" x-text="selectedProduct?.product_name"></h2>
+            <p class="popup-description" x-text="selectedProduct?.description || 'No description available.'"></p>
+            <p class="popup-price" x-text="'₱' + parseFloat(selectedProduct?.price).toFixed(2)"></p>
+            <div>
+                <p><strong>Flavor:</strong> <span x-text="selectedProduct?.flavor || 'N/A'"></span></p>
+                <p><strong>Color:</strong> <span x-text="selectedProduct?.color || 'N/A'"></span></p>
+                <p><strong>Puffs:</strong> <span x-text="selectedProduct?.puffs || 'N/A'"></span></p>
             </div>
         </div>
     </div>
 
     <!-- Modal for all products in a category -->
-    <div x-show="showAllProducts" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" x-cloak>
-        <div class="bg-white rounded-lg shadow-xl max-w-6xl w-full" @click.away="showAllProducts = false">
-            <div class="p-6">
-                <h2 class="text-3xl font-bold mb-6 text-gray-800" x-text="'All ' + selectedCategory?.category_name"></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-h-[70vh] overflow-y-auto">
-                    <template x-for="product in allProducts" :key="product.product_id">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <img :src="product.img_dir" :alt="product.product_name" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg mb-2 text-gray-800" x-text="product.product_name"></h3>
-                                <p class="text-gray-700 text-base mb-3" x-text="'$' + parseFloat(product.price).toFixed(2)"></p>
-                                <button @click="openProductModal(product); showAllProducts = false" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                                    View Details
-                                </button>
-                            </div>
+    <div x-show="showAllProducts" class="popup-overlay" x-cloak @click.self="showAllProducts = false">
+        <div class="popup-content">
+            <span class="close-popup" @click="showAllProducts = false">&times;</span>
+            <h2 class="popup-title" x-text="'All ' + selectedCategory?.category_name"></h2>
+            <div class="product-grid">
+                <template x-for="product in allProducts" :key="product.product_id">
+                    <div class="product-card" @click="openProductModal(product); showAllProducts = false">
+                        <img :src="product.img_dir" :alt="product.product_name" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-name" x-text="product.product_name"></h3>
+                            <p class="product-price" x-text="'₱' + parseFloat(product.price).toFixed(2)"></p>
                         </div>
-                    </template>
-                </div>
-                <div class="mt-6 text-center">
-                    <button @click="showAllProducts = false" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
-                        Close
-                    </button>
-                </div>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
