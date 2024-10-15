@@ -47,6 +47,67 @@ if (!empty($request)) {
     <link rel="shortcut icon" href="./assets/Favicon_Inno.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>.product-showcase {
+    padding: 2rem 0;
+}
+
+.product-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.product-column {
+    flex: 0 0 auto;
+    width: calc(33.333% - 1rem);
+    min-width: 250px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.browse-button {
+    display: inline-block;
+    background-color: #ff7f50;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.browse-button:hover {
+    background-color: #e06943;
+}
+
+@media (max-width: 768px) {
+    .product-row {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+    
+    .product-column {
+        width: 80%;
+    }
+}</style>
 
     <!-- STYLE FOR SLIDER -->
     <style>
@@ -110,21 +171,21 @@ if (!empty($request)) {
             <div class="hero-content">
                 <h1>Welcome to Innocuous Mist</h1>
                 <p>Experience the future of vaping with our cutting-edge products and flavors.</p>
-                <a href="catalog.php" class="cta-button">Explore Our Catalog</a>
+                <a href="catalog" class="cta-button">Explore Our Catalog</a>
             </div>
         </div>
         <div class="slide" style="background-image: url('assets/slider2.jpg');">
             <div class="hero-content">
                 <h1>Discover Our New Arrivals</h1>
                 <p>Fresh flavors and the latest vape devices available now.</p>
-                <a href="catalog.php" class="cta-button">Shop Now</a>
+                <a href="catalog" class="cta-button">Shop Now</a>
             </div>
         </div>
         <div class="slide" style="background-image: url('assets/slider3.jpg');">
             <div class="hero-content">
                 <h1>Quality Vaping Products</h1>
                 <p>Premium products for an exceptional vaping experience.</p>
-                <a href="catalog.php" class="cta-button">Browse Our Products</a>
+                <a href="catalog" class="cta-button">Browse Our Products</a>
             <!-- </div> -->
         </div>
     </div>
@@ -205,65 +266,45 @@ if (!empty($request)) {
             </div>
         </div>
     </div>
-        <section class="section" id="vapes">
-            <h2>VAPES</h2>
-            <p>Discover our range of high-quality vapes for a superior experience.</p>
-            <div class="products">
-                <?php
-                $stmt = $conn->prepare("SELECT product_name, description, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ?");
-                $category_id = 2; // Assuming 1 is for 'Vapes'
-                $stmt->bind_param("i", $category_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
+    <!-- DISPLAY SECTION -->
+<!-- DYNAMIC DISPLAY SECTION -->
+<!-- DYNAMIC DISPLAY SECTION -->
+<section class="product-showcase">
+    <div class="container">
+        <div class="product-row">
+            <?php
+            // Fetch categories
+            $cat_stmt = $conn->prepare("SELECT category_id, category_name FROM categories LIMIT 3");
+            $cat_stmt->execute();
+            $categories = $cat_stmt->get_result();
 
-                while ($row = $result->fetch_assoc()) {
-                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
-                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
-                            <h3>{$row['product_name']}</h3>
-                            <p>{$row['description']}</p>
-                          </div>";
+            while ($category = $categories->fetch_assoc()) {
+                // Fetch one product for each category
+                $prod_stmt = $conn->prepare("SELECT product_name, description, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ? LIMIT 1");
+                $prod_stmt->bind_param("i", $category['category_id']);
+                $prod_stmt->execute();
+                $product = $prod_stmt->get_result()->fetch_assoc();
+
+                if ($product) {
+                    ?>
+                    <div class="product-column">
+                        <h1><?php echo strtoupper($category['category_name']); ?></h1>
+                        <div class="product-card" onclick="openPopup('<?php echo $product['img_dir']; ?>', '<?php echo $product['product_name']; ?>', '<?php echo $product['description']; ?>', '<?php echo $product['price']; ?>')">
+                            <img src="<?php echo $product['img_dir']; ?>" alt="<?php echo $product['product_name']; ?>" class="product-image">
+                            <h3><?php echo $product['product_name']; ?></h3>
+                            <p><?php echo $product['description']; ?></p>
+                        </div>
+                        <a href="catalog.php?category=<?php echo $category['category_id']; ?>" class="browse-button">Browse <?php echo $category['category_name']; ?></a>
+                    </div>
+                    <?php
                 }
-                ?>
-            </div>
-        </section>
-        <section class="section" id="juice">
-            <h2>JUICE</h2>
-            <p>Explore our delicious selection of vape juices.</p>
-            <div class="products">
-                <?php
-                $category_id = 1; // Assuming 2 is for 'Juice'
-                $stmt->bind_param("i", $category_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                while ($row = $result->fetch_assoc()) {
-                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
-                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
-                            <h3>{$row['product_name']}</h3>
-                            <p>{$row['description']}</p>
-                          </div>";
-                }
-                ?>
-            </div>
-        </section>
-        <section class="section" id="disposables">
-            <h2>DISPOSABLES</h2>
-            <p>Check out our convenient disposable vapes.</p>
-            <div class="products">
-                <?php
-                $category_id = 3; // Assuming 3 is for 'Disposables'
-                $stmt->bind_param("i", $category_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                while ($row = $result->fetch_assoc()) {
-                    echo "<div class='product-card' onclick=\"openPopup('{$row['img_dir']}', '{$row['product_name']}', '{$row['description']}', '{$row['price']}')\">
-                            <img src='{$row['img_dir']}' alt='{$row['product_name']}' class='product-image'>
-                            <h3>{$row['product_name']}</h3>
-                            <p>{$row['description']}</p>
-                          </div>";
-                }
-                ?>
-            </div>
-        </section>
+                $prod_stmt->close();
+            }
+            $cat_stmt->close();
+            ?>
+        </div>
+    </div>
+</section>
     </main>
     <!-- Pop-up structure -->
     <div class="popup-overlay" id="productPopup">
