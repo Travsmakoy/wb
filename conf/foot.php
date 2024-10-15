@@ -9,15 +9,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="stylesheet" href="./styles/home.css">
+    <link rel="stylesheet" href="./styles/output.css">
 
-    <title>Cool Compact Footer</title>
+    <!-- <title>Cool Compact Footer</title> -->
 
 </head>
 <body>
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>I.M. VAPESHOP OPC</h3>
+                <h3>Innocuous Mist VAPESHOP</h3>
                 <p>Your go-to for premium vaping products.</p>
                 <div class="social-icons">
                     <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
@@ -46,7 +48,7 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; 2024 I.M. VAPESHOP OPC. All rights reserved.
+            &copy; 2024 Innocuous Mist. All rights reserved.
         </div>
     </footer>
 

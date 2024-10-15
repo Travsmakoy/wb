@@ -206,7 +206,7 @@ if (!empty($request)) {
         </div>
     </div>
         <section class="section" id="vapes">
-            <h2>Vapes</h2>
+            <h2>VAPES</h2>
             <p>Discover our range of high-quality vapes for a superior experience.</p>
             <div class="products">
                 <?php
@@ -227,7 +227,7 @@ if (!empty($request)) {
             </div>
         </section>
         <section class="section" id="juice">
-            <h2>Juice</h2>
+            <h2>JUICE</h2>
             <p>Explore our delicious selection of vape juices.</p>
             <div class="products">
                 <?php
@@ -246,7 +246,7 @@ if (!empty($request)) {
             </div>
         </section>
         <section class="section" id="disposables">
-            <h2>Disposables</h2>
+            <h2>DISPOSABLES</h2>
             <p>Check out our convenient disposable vapes.</p>
             <div class="products">
                 <?php
