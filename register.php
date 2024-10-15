@@ -129,9 +129,11 @@ if (!empty($request)) {
         <div id="page1">
             <input placeholder="First Name" type="text" name="first_name" id="first_name" required><br>
             <input placeholder="Last Name" type="text" name="last_name" id="last_name" required><br>
-            <input type="date" name="birthday" id="birthday" required><br>
+            <input type="date" name="birthday" id="birthday" required min="1900-01-01" max="2099-12-31"><br>
             <input placeholder="Email Address" type="email" name="email" id="email" required><br>
-            <input placeholder="Contact Number" type="text" name="contact_number" id="contact_number" required><br>
+            <input placeholder="Contact Number" type="text" name="contact_number" id="contact_number" required 
+       pattern="^\d{11,12}$" maxlength="12" title="Please enter a valid contact number (11 or 12 digits)" inputmode="numeric" /><br>
+
             <input placeholder="Password" type="password" name="password" id="password" required><br>
             <input placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password" required><br>
             <button type="button" onclick="nextPage()">Next</button>
@@ -141,7 +143,7 @@ if (!empty($request)) {
         <div id="page2" class="hidden">
             <h3>Address Details</h3>
             <label>Unit Number / House Number:</label><input type="text" name="home_address" id="home_address" required><br>
-            <label>Identification Upload (Valid ID):</label><input type="file" name="identification" id="identification" required><br>
+            <label>Identification Upload (Valid ID):</label><input type="file" name="identification" id="identification" accept=".jpg,.jpeg,.png" required><br>
 
             <div class="col-sm-6 mb-3">
                 <label>Region *</label>
