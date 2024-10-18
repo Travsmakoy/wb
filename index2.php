@@ -44,10 +44,60 @@ if (!empty($request)) {
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/output.css">
     <link rel="stylesheet" href="styles/home.css">
-    <link rel="shortcut icon" href="./assets/Favicon_Inno.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>.product-showcase {
+    <style>
+    
+    .category-slider-container {
+    position: relative;
+}
+
+.category-slider {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.category-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.category-slider > div {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 22, 149, 0.7);
+    color: white;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.slider-nav:hover {
+    background-color: rgba(255, 22, 149, 1);
+}
+
+.slider-nav.left-0 {
+    left: 0;
+}
+
+.slider-nav.right-0 {
+    right: 0;
+}
+    
+    .product-showcase {
     padding: 2rem 0;
 }
 
@@ -195,6 +245,57 @@ if (!empty($request)) {
             <p class="text-[#610049] text-center font-semibold bebas-neue mobilelg:text-xl lg:text-2xl">Government warning: This product is harmful and contains nicotine which is a highly addictive substance. This is for use only by adults and is not recommended for use by non-smokers.</p>
         </div>
     </div>
+    <!-- DYNAMIC DISPLAY SECTION -->
+<section class="partners_bg py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-[#33FCFF] mb-10 oswald">Featured Products</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <?php
+            // Fetch categories
+            $cat_stmt = $conn->prepare("SELECT category_id, category_name FROM categories LIMIT 3");
+            $cat_stmt->execute();
+            $categories = $cat_stmt->get_result();
+
+            while ($category = $categories->fetch_assoc()) {
+                ?>
+                <div class="category-slider-container">
+                    <h3 class="text-xl font-semibold text-[#FF1695] mb-4"><?php echo $category['category_name']; ?></h3>
+                    <div class="relative">
+                        <div class="category-slider" id="slider-<?php echo $category['category_id']; ?>">
+                            <?php
+                            // Fetch products for each category
+                            $prod_stmt = $conn->prepare("SELECT product_id, product_name, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ? LIMIT 5");
+                            $prod_stmt->bind_param("i", $category['category_id']);
+                            $prod_stmt->execute();
+                            $products = $prod_stmt->get_result();
+
+                            while ($product = $products->fetch_assoc()):
+                            ?>
+                                <div class="bg-[#1A1D3B] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                                    <div class="relative h-48">
+                                        <img src="<?php echo $product['img_dir']; ?>" alt="<?php echo $product['product_name']; ?>" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="text-lg font-semibold text-[#33FCFF] mb-2 truncate"><?php echo $product['product_name']; ?></h4>
+                                        <span class="text-[#FF1695] font-bold">₱<?php echo number_format($product['price'], 2); ?></span>
+                                    </div>
+                                </div>
+                            <?php
+                            endwhile;
+                            $prod_stmt->close();
+                            ?>
+                        </div>
+                        <button class="slider-nav left-0" onclick="moveSlider('<?php echo $category['category_id']; ?>', 'left')">&#10094;</button>
+                        <button class="slider-nav right-0" onclick="moveSlider('<?php echo $category['category_id']; ?>', 'right')">&#10095;</button>
+                    </div>
+                </div>
+                <?php
+            }
+            $cat_stmt->close();
+            ?>
+        </div>
+    </div>
+</section>
     <!-- BRAND PARTNERS -->
     <div class="overflow-x-hidden partners_bg relative w-full h-auto p-4 flex flex-col justify-center items-center flex-wrap gap-4 mobilemd:p-6 mobilelg:gap-6 sm:max-h-[50vh] sm:h-[50vh] sm:p-8 sm:gap-8 md:px-10 lg:px-12 xl:px-14 xl:gap-14 xl:h-[60vh] xl:max-h-[60vh] laptopxxl:px-16 2xl:px-20">
         <div class="w-full flex items-center justify-around gap-2 flex-wrap">
@@ -213,6 +314,7 @@ if (!empty($request)) {
             <a href="https://www.facebook.com/SMPOPH" target="_blank" class="hover:scale-105"><img src="./assets/smpo-logo.png" class="w-[80px] h-auto mobilelg:w-[100px] sm:w-[120px] xl:w-[130px] 2xl:w-[160px]"></a>
         </div>
     </div>
+    
     <!-- RELATED ARTICLES -->
     <div class="lg:grid lg:grid-cols-2 lg:w-full lg:max-w-full lg:items-end lg:justify-between">
         <div class="w-full max-w-full h-[60vh] bg-gradient-to-t from-[#FF1695] to-transparent flex flex-col items-center justify-center gap-3 px-4 mobilemd:px-6 sm:h-[70vh] sm:max-h-[70vh] sm:p-8 sm:gap-4 md:px-10 md:h-[80vh] md:max-h-[80vh] lg:p-12 xl:p-14 laptopxxl:p-16 2xl:px-20 2xl:py-8">
@@ -266,76 +368,25 @@ if (!empty($request)) {
             </div>
         </div>
     </div>
-<!-- DYNAMIC DISPLAY SECTION -->
-<section class="partners_bg py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center text-[#33FCFF] mb-10 oswald">Featured Products</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php
-            // Fetch categories
-            $cat_stmt = $conn->prepare("SELECT category_id, category_name FROM categories LIMIT 3");
-            $cat_stmt->execute();
-            $categories = $cat_stmt->get_result();
+   </main>
 
-            while ($category = $categories->fetch_assoc()) {
-                // Fetch one product for each category
-                $prod_stmt = $conn->prepare("SELECT product_name, description, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ? LIMIT 1");
-                $prod_stmt->bind_param("i", $category['category_id']);
-                $prod_stmt->execute();
-                $product = $prod_stmt->get_result()->fetch_assoc();
+<script>
+    
+</script>
+<script>
+    
+function moveSlider(categoryId, direction) {
+    const slider = document.getElementById(`slider-${categoryId}`);
+    const scrollAmount = slider.offsetWidth;
+    if (direction === 'left') {
+        slider.scrollBy(-scrollAmount, 0);
+    } else {
+        slider.scrollBy(scrollAmount, 0);
+    }
+}
+</script>
 
-                if ($product) {
-                    ?>
-                    <div class="bg-[#1A1D3B] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-                        <div class="relative h-64">
-                            <img src="<?php echo $product['img_dir']; ?>" alt="<?php echo $product['product_name']; ?>" class="w-full h-full object-cover">
-                            <div class="absolute top-0 left-0 bg-[#FF1695] text-white px-3 py-1 rounded-br-lg oswald">
-                                <?php echo strtoupper($category['category_name']); ?>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-[#33FCFF] mb-2"><?php echo $product['product_name']; ?></h3>
-                            <p class="text-gray-300 mb-4 line-clamp-2"><?php echo $product['description']; ?></p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-[#FF1695] font-bold">₱<?php echo number_format($product['price'], 2); ?></span>
-                                <button onclick="openPopup('<?php echo $product['img_dir']; ?>', '<?php echo htmlspecialchars($product['product_name']); ?>', '<?php echo htmlspecialchars($product['description']); ?>', '<?php echo $product['price']; ?>')" class="bg-[#33FCFF] text-[#1A1D3B] px-4 py-2 rounded-full hover:bg-[#FF1695] hover:text-white transition-colors duration-300">
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-                        <div class="px-6 pb-6">
-                            <a href="catalog.php?category=<?php echo $category['category_id']; ?>" class="block w-full text-center bg-[#FF1695] text-white py-2 rounded-full hover:bg-[#33FCFF] hover:text-[#1A1D3B] transition-colors duration-300">
-                                Browse <?php echo $category['category_name']; ?>
-                            </a>
-                        </div>
-                    </div>
-                    <?php
-                }
-                $prod_stmt->close();
-            }
-            $cat_stmt->close();
-            ?>
-        </div>
-    </div>
-</section>
-
-    </main>
-    <!-- Pop-up structure -->
-    <div id="productPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-[#1A1D3B] rounded-lg p-8 max-w-md w-full mx-4">
-        <button onclick="closePopup()" class="absolute top-2 right-2 text-gray-500 hover:text-white">&times;</button>
-        <img id="popupImage" src="" alt="Product Image" class="w-full h-64 object-cover rounded-lg mb-4">
-        <h3 id="popupTitle" class="text-2xl font-bold text-[#33FCFF] mb-2"></h3>
-        <p id="popupDescription" class="text-gray-300 mb-4"></p>
-        <p id="popupPrice" class="text-[#FF1695] font-bold text-xl mb-4"></p>
-        <a href="#" class="block w-full text-center bg-[#FF1695] text-white py-2 rounded-full hover:bg-[#33FCFF] hover:text-[#1A1D3B] transition-colors duration-300">
-            Inquire via Chat
-        </a>
-    </div>
-</div>
-
-
-    <!-- SCRIPT FOR SLIDER -->
+    <!-- SCRIPT FOR SLIDER HERO -->
     <script>
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
@@ -355,8 +406,9 @@ if (!empty($request)) {
     }
 
     // Automatically change slides every 5 seconds
-    setInterval(nextSlide, 5000);
+    setInterval(nextSlide,3000);
 </script>
+
 </body>
 <?php include 'conf/foot.php'; ?>
 </html>
