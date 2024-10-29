@@ -220,10 +220,14 @@ if (!empty($request)) {
             top: 60px; /* Position below the navbar */
             left: 0;
             z-index: 1000; /* Ensure it overlays other content */
+            padding: 16px;
+            height: 50vh;
         }
 
         .nav-menu.active {
             display: flex; /* Show when active */
+            flex-direction: column;
+            gap: 16px;
         }
 
         .hamburger {
