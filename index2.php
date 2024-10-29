@@ -116,6 +116,7 @@ if (!empty($request)) {
 }
 
 .product-card {
+    margin: 0;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1rem;
@@ -211,6 +212,37 @@ if (!empty($request)) {
     .cta-button:hover {
         background-color: #e06943;
     }
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -246,6 +278,7 @@ if (!empty($request)) {
         </div>
     </div>
     <!-- DYNAMIC DISPLAY SECTION -->
+<!-- DYNAMIC DISPLAY SECTION -->
 <section class="partners_bg py-16">
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center text-[#33FCFF] mb-10 oswald">Featured Products</h2>
@@ -264,20 +297,33 @@ if (!empty($request)) {
                         <div class="category-slider" id="slider-<?php echo $category['category_id']; ?>">
                             <?php
                             // Fetch products for each category
-                            $prod_stmt = $conn->prepare("SELECT product_id, product_name, REPLACE(img_dir, '../', '') AS img_dir, price FROM products WHERE category_id = ? LIMIT 5");
+                            $prod_stmt = $conn->prepare("SELECT product_id, product_name, REPLACE(img_dir, '../', '') AS img_dir, price, description FROM products WHERE category_id = ? LIMIT 5");
                             $prod_stmt->bind_param("i", $category['category_id']);
                             $prod_stmt->execute();
                             $products = $prod_stmt->get_result();
 
                             while ($product = $products->fetch_assoc()):
                             ?>
-                                <div class="bg-[#1A1D3B] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                                <div class="product-card bg-[#1A1D3B] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" onclick="openModal(<?php echo $product['product_id']; ?>)">
                                     <div class="relative h-48">
                                         <img src="<?php echo $product['img_dir']; ?>" alt="<?php echo $product['product_name']; ?>" class="w-full h-full object-cover">
                                     </div>
                                     <div class="p-4">
                                         <h4 class="text-lg font-semibold text-[#33FCFF] mb-2 truncate"><?php echo $product['product_name']; ?></h4>
                                         <span class="text-[#FF1695] font-bold">₱<?php echo number_format($product['price'], 2); ?></span>
+                                    </div>
+                                </div>
+
+                                <!-- Modal for product details -->
+                                <div id="modal-<?php echo $product['product_id']; ?>" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div class="modal-content bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-lg">
+                                        <span class="close-modal cursor-pointer text-right text-gray-500 font-bold" onclick="closeModal(<?php echo $product['product_id']; ?>)">&times;</span>
+                                        <div class="modal-body">
+                                            <img src="<?php echo $product['img_dir']; ?>" alt="<?php echo $product['product_name']; ?>" class="w-full h-64 object-cover mb-4">
+                                            <h2 class="text-2xl font-semibold mb-2"><?php echo $product['product_name']; ?></h2>
+                                            <p class="text-gray-700 mb-4"><?php echo $product['description']; ?></p>
+                                            <span class="text-[#FF1695] font-bold text-lg">₱<?php echo number_format($product['price'], 2); ?></span>
+                                        </div>
                                     </div>
                                 </div>
                             <?php
@@ -296,6 +342,7 @@ if (!empty($request)) {
         </div>
     </div>
 </section>
+
     <!-- BRAND PARTNERS -->
     <div class="overflow-x-hidden partners_bg relative w-full h-auto p-4 flex flex-col justify-center items-center flex-wrap gap-4 mobilemd:p-6 mobilelg:gap-6 sm:max-h-[50vh] sm:h-[50vh] sm:p-8 sm:gap-8 md:px-10 lg:px-12 xl:px-14 xl:gap-14 xl:h-[60vh] xl:max-h-[60vh] laptopxxl:px-16 2xl:px-20">
         <div class="w-full flex items-center justify-around gap-2 flex-wrap">
@@ -371,7 +418,13 @@ if (!empty($request)) {
    </main>
 
 <script>
-    
+    function openModal(productId) {
+    document.getElementById(`modal-${productId}`).classList.remove('hidden');
+}
+
+function closeModal(productId) {
+    document.getElementById(`modal-${productId}`).classList.add('hidden');
+}
 </script>
 <script>
     
