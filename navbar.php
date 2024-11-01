@@ -221,7 +221,7 @@ if (!empty($request)) {
             left: 0;
             z-index: 1000; /* Ensure it overlays other content */
             padding: 16px;
-            height: 50vh;
+            /* height: 50vh; */
         }
 
         .nav-menu.active {
