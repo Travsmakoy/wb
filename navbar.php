@@ -37,7 +37,7 @@ if (!empty($request)) {
 // }
 ?>
 
-<header>
+<header class="head">
     <link rel="stylesheet" href="styles/global.css">
     <nav class="navbar">
         <div class="navbar-container">

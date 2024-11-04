@@ -45,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        .head{
+            z-index: 1994;
+            position: relative;
+        }
         /* Your existing CSS styles */
         body {
             background-color: #1A1D3B;
