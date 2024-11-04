@@ -54,7 +54,7 @@ if (!empty($request)) {
     <li class="dropdown">
         <a href="#" class="nav-link dropdown-toggle">OTHERS</a>
         <ul class="dropdown-menu">
-            <li><a href="#" class="nav-link">FAQs</a></li>
+            <li><a href="faqs" class="nav-link">FAQs</a></li>
             <li><a href="#" class="nav-link">About Us</a></li>
             <li><a href="#" class="nav-link">Others</a></li>
         </ul>

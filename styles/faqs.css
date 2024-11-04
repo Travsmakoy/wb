@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    scroll-behavior: smooth !important;
+}
+
+/* Root */
+:root {
+    /* Background Color */
+    --bg-dark-violet: #1A1D3B;
+    --bg-light-blue: #00FBFF;
+    --bg-pink: #FF1695;
+
+    /* Background Gradient */
+    --bg-heading: linear-gradient(90deg, rgba(51,252,255,1) 30%, rgba(255,0,138,1) 71%, rgba(255,80,176,1) 100%);
+
+    /* Heading Colors */
+    --heading-light-blue: #00FBFF;
+    --heading-pink: #FF008A;
+    --heading-light-pink: #FF50B0;
+
+    /* Paragraph Colors */
+    --txt-white: #FFF;
+
+    /* Font Style */
+    --font-family-poppins: 'Poppins', sans-serif;
+    --font-family-tourney: 'Tourney', sans-serif;
+    --font-family-open-sans: 'Open Sans', sans-serif;
+
+    --transition: all 0.2s ease;
+}
+
+/* Reusable Styling */
+.retro_clouds_h1 {
+    font-family: var(--font-family-tourney);
+    background: var(--bg-heading);
+    background-clip: text;
+    color: transparent;
+}
+
+.retro_clouds_h2 {
+    font-family: var(--font-family-poppins);
+}
+
+.retro_clouds_p {
+    font-family: var(--font-family-open-sans);
+}
+
+.retro_clouds_h1{
+    font-family: "Tourney", sans-serif;
+    background: linear-gradient(90deg, rgba(51,252,255,1) 30%, rgba(255,0,138,1) 71%, rgba(255,80,176,1) 100%);
+    background-clip: text;
+    color: transparent;
+}
+
+.oswald{
+    font-family: "Oswald", sans-serif;
+}
+
+.poppins{
+    font-family: "Poppins" , sans-serif;
+}
+
+.bebas-neue {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.nav__open,
+.nav__close {
+    transition: opacity .1s, transform .4s;
+}
+
+.retro_clouds_bg_gradient {
+    background: rgb(26,29,59);
+    background: linear-gradient(180deg, rgba(26,29,59,1) 0%, rgba(153,13,90,1) 20%, rgba(255,22,149,1) 50%, rgba(153,13,90,1) 80%, rgba(26,29,59,1) 100%);
+}
+
+.accordion_icons {
+    transition: all 0.2s ease !important;
+}
+
+.accordions.read .accordion_icons {
+    transform: rotate(-180deg) !important;
+}
+
+.accordions.read .faqs_container {
+    grid-template-rows: auto !important;
+}
+
+.divider {
+    background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../assets/faqs_divider.png') !important;
+    background-size: cover !important;
+    background-position: center !important;;
+    background-attachment: fixed !important;;
+}
+
