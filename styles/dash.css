@@ -20,7 +20,7 @@
             color: var(--text-color);
         }
 
-        .sidebar {
+        /* .sidebar {
             width: var(--sidebar-width);
             background: var(--secondary-color);
             color: #fff;
@@ -45,12 +45,14 @@
 
         .sidebar a:hover {
             background-color: #555;
-        }
+        } */
 
         .content {
-            flex: 1;
+            /* flex: 1;
             padding: 2rem;
-            margin-left: var(--sidebar-width);
+            margin-left: var(--sidebar-width); */
+            margin: auto;
+            flex: auto;
         }
 
         .dashboard-header {

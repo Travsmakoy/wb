@@ -254,5 +254,6 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     }, 4000);
 });
     </script>
+     <!-- <?php include "../su/side.php" ?> -->
 </body>
 </html>

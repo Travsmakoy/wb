@@ -90,10 +90,11 @@ if ($result->num_rows > 0) {
         }
 
         .content {
-            flex: 1;
+            flex:auto;
+            /* flex: 1;
             padding: 2rem;
             margin-left: var(--sidebar-width);
-            transition: margin-left var(--transition-time);
+            transition: margin-left var(--transition-time); */
         }
 
         .tabs {
@@ -191,15 +192,16 @@ if ($result->num_rows > 0) {
     </style>
 </head>
 <body>
-    <aside class="sidebar">
+<?php include "side.php" ?>
+    <!-- <aside class="sidebar">
         <h2>Admin Panel</h2>
         <nav>
-        <a href="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="../ChatUse/admin_chat"><i class="fas fa-comments"></i> Chats</a>
             <a href="user"><i class="fas fa-users"></i> Users</a>
             <a href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
-    </aside>
+    </aside> -->
 
     <main class="content">
         <header class="dashboard-header">
