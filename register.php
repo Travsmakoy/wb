@@ -119,9 +119,9 @@ if (!empty($request)) {
       <div class="container">
         <div class="form-container mt-5">
             <div class="form-content">
-                <img src="assets/mist-logo-withoutname.png" alt="Image" class="img-fluid">
+                    <img src="assets/mist-logo-withoutname.png" alt="Image" class="img-fluid">
                 <div class="form-fields">
-    <h2>Register</h2>
+    <!-- <h2>Register</h2> -->
     <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
  
     <form method="post" enctype="multipart/form-data" id="registrationForm">

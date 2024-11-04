@@ -10,7 +10,7 @@ body {
 }
 
 .form-container {
-    max-width: 800px;
+    /* max-width: 800px; */
     margin: auto;
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
@@ -21,7 +21,7 @@ body {
 .form-content {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .form-content img {
@@ -96,7 +96,7 @@ button:hover {
     }
 
     .form-content img {
-        max-width: 100%; /* Image takes full width on mobile */
+        max-width: 50%; /* Image takes full width on mobile */
         margin-bottom: 15px; /* Space below the image */
     }
 
