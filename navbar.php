@@ -134,8 +134,8 @@ if (!empty($request)) {
 
     /* Logo Styles */
     .navbar-logo {
-        padding-top: 23px;
-        height: 40px; /* Adjust the height for better visibility */
+        padding-top: 10px;
+        height: 50px; /* Adjust the height for better visibility */
         width: auto; 
         margin-right: 10px;
         
