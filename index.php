@@ -417,15 +417,37 @@ if (!empty($request)) {
     </div>
    </main>
 
-<script>
-    function openModal(productId) {
-    document.getElementById(`modal-${productId}`).classList.remove('hidden');
+   <script>
+function openModal(productId) {
+    const modal = document.getElementById(`modal-${productId}`);
+    modal.classList.remove('hidden');
+
+    // Close modal if clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeModal(productId);
+        }
+    });
 }
 
 function closeModal(productId) {
-    document.getElementById(`modal-${productId}`).classList.add('hidden');
+    const modal = document.getElementById(`modal-${productId}`);
+    modal.classList.add('hidden');
+
+    // Remove the event listener to prevent it from stacking
+    window.removeEventListener('click', closeModalOnOutsideClick);
+}
+
+// Optional helper function to clean up event listener
+function closeModalOnOutsideClick(event) {
+    const modal = document.querySelector(`.modal:not(.hidden)`);
+    if (modal && event.target === modal) {
+        modal.classList.add('hidden');
+        window.removeEventListener('click', closeModalOnOutsideClick);
+    }
 }
 </script>
+
 <script>
     
 function moveSlider(categoryId, direction) {
