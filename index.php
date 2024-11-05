@@ -226,7 +226,7 @@ if (!empty($request)) {
 
 .modal-content {
     position: relative;
-    background-color: #fff;
+    background-color: #333;
     margin: auto;
     padding: 20px;
     width: 90%;
