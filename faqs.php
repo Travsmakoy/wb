@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Clouds PH - FAQs</title>
+    <title>Innocuous Mist - FAQs</title>
     <link rel="stylesheet" href="./styles/output.css">
     <link rel="stylesheet" href="./styles/faqs.css">
     <link rel="shortcut icon" href="./assets/mist-logo.png" type="image/x-icon">
