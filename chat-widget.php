@@ -114,6 +114,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
             padding: 15px;
             background-color: white;
             border-top: 1px solid var(--border-color);
+            color: #333;
         }
 
         .chat-input input {
