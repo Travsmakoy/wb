@@ -73,7 +73,7 @@ $productsJson = json_encode($products);
     </div>
 
     <!-- Modal for single product -->
-    <div x-show="selectedProduct" class="popup-overlay" x-cloak @click.self="selectedProduct = null">00000
+    <div x-show="selectedProduct" class="popup-overlay" x-cloak @click.self="selectedProduct = null">
         <div class="popup-content">
             <span class="close-popup" @click="selectedProduct = null">&times;</span>
             <img :src="selectedProduct?.img_dir" :alt="selectedProduct?.product_name" class="popup-image">
