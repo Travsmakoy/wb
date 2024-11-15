@@ -2,7 +2,7 @@
 session_start();
 session_unset(); // Remove all session variables
 session_destroy(); // Destroy the session
-header("Location: index.php"); // Redirect to login page
+header("Location: index"); // Redirect to login page
 exit;
 ?>
 <?php
@@ -16,7 +16,7 @@ $request = $_SERVER['REQUEST_URI'];
 $request = ltrim($request, '/');
 
 // Set the default file
-$file = 'index.php'; // Change this to your default home page
+$file = 'index'; // Change this to your default home page
 
 // If the request is not empty, append .php
 if (!empty($request)) {
