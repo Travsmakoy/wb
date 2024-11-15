@@ -159,6 +159,7 @@ $admin_id = $conn->query("SELECT id FROM users WHERE is_admin = 1")->fetch_assoc
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const chatWidgetIcon = document.getElementById('chatWidgetIcon');
@@ -189,7 +190,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    chatWidgetIcon.addEventListener('click', toggleChatWidget);
+    // Add click event listener to the document
+    document.addEventListener('click', (event) => {
+        // Check if the click is outside both the chat widget and the chat icon
+        if (!chatWidget.contains(event.target) && event.target !== chatWidgetIcon) {
+            // Close the chat widget
+            chatWidget.style.display = 'none';
+        }
+    });
+
+    // Prevent the click inside the chat widget from bubbling up to the document
+    chatWidget.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
+    chatWidgetIcon.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent the click from bubbling up
+        toggleChatWidget();
+    });
 
     function addMessage(content, isReceived = true) {
         const messageDiv = document.createElement('div');
