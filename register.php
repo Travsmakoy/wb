@@ -108,7 +108,7 @@ if (!empty($request)) {
     <!-- <link rel="stylesheet" href="styles/output.css"> -->
     <!-- <link rel="stylesheet" href="styles/home.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Register</title>
+    <title>Innocuous Mist | Register</title>
     <style>
         .hidden { display: none; }
         .error { color: red; }
@@ -171,7 +171,6 @@ if (!empty($request)) {
 
             <button type="button" onclick="prevPage()">Back</button>
             <button type="submit">Register</button>
-   
     </form>
     </div>
     </div>

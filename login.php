@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innocous Mist | Login</title>
+    <title>Innocuous Mist - Login</title>
     <link rel="stylesheet" href="./styles/output.css">
     <link rel="stylesheet" href="./styles/home.css">
     <link rel="shortcut icon" href="./assets/Favicon_Retro.png" type="image/x-icon">

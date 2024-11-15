@@ -40,7 +40,7 @@ $productsJson = json_encode($products);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Modern Vape Shop Catalog</title> -->
+    <title>Innocuous Mist - Products</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link rel="stylesheet" href="./styles/catalog.css">
@@ -73,7 +73,7 @@ $productsJson = json_encode($products);
     </div>
 
     <!-- Modal for single product -->
-    <div x-show="selectedProduct" class="popup-overlay" x-cloak @click.self="selectedProduct = null">
+    <div x-show="selectedProduct" class="popup-overlay" x-cloak @click.self="selectedProduct = null">00000
         <div class="popup-content">
             <span class="close-popup" @click="selectedProduct = null">&times;</span>
             <img :src="selectedProduct?.img_dir" :alt="selectedProduct?.product_name" class="popup-image">
